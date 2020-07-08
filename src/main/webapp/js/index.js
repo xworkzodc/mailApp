@@ -7,7 +7,7 @@ $(document).ready(function () {
 	$('.sendBulkSMS').hide();
 });
 
-let getDropdown  = () => fetch('https://raw.githubusercontent.com/dvsmahajan/newsfeed/master/mailSender.json').then(data => data.json());
+let getDropdown  = () => fetch('https://raw.githubusercontent.com/xworkzodc/newsfeed/master/mailSender.json').then(data => data.json());
 
 async function getDropdownDetails(stringValue){
 	var data=await getDropdown();

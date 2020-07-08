@@ -267,13 +267,13 @@ public class OkHttpClientService {
 		return null;
 	}
 
-	public String getAllMailChimpList(Integer msgType) {
-		logger.info("qwertyuiop asdfghjkl zxcvbnm {} {}",msgType);
+	public String getAllMailChimpList(Integer mailid) {
+		logger.info("qwertyuiop asdfghjkl zxcvbnm {} {}",mailid);
 		String a = "";
 		String rt = "";
 		String fn = "";
 		String htp = "";
-		if (msgType == 1) {
+		if (mailid == 1) {
 			a = auth1;
 			rt = replyTo1;
 			fn = fromName1;
@@ -299,9 +299,9 @@ public class OkHttpClientService {
 		return null;
 	}
 
-	public String getListIdFromListName(String listName, Integer integer) {
+	public String getListIdFromListName(String listName, Integer mailid) {
 		logger.info("List name from dto {}", listName);
-		MailChimpList chimpList = new Gson().fromJson(getAllMailChimpList(integer), MailChimpList.class);
+		MailChimpList chimpList = new Gson().fromJson(getAllMailChimpList(mailid), MailChimpList.class);
 		for (MailChimpMailDetails chimpMailDetails : chimpList.getLists()) {
 			if (!listName.isEmpty() && !chimpMailDetails.getName().isEmpty()
 					&& listName.equalsIgnoreCase(chimpMailDetails.getName())) {

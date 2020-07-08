@@ -54,13 +54,24 @@ public class XworkzService {
 	public void sendMSG(List<String> contactList, String message) {
 		for (String phone : contactList) {
 			if (phone.length() == 10) {
-				logger.debug("API KEY is {} Secret Key is {} Sender id is {} useType is {}",
-						encryptionHelper.decrypt(apiKey), encryptionHelper.decrypt(secretKey), senderId, useType);
-				String res = smsService.sendCampaign(encryptionHelper.decrypt(apiKey),
-						encryptionHelper.decrypt(secretKey), useType, phone, message, senderId);
-
+				try {
+					Thread.sleep(6000);
+					logger.debug("API KEY is {} Secret Key is {} Sender id is {} useType is {}",
+							encryptionHelper.decrypt(apiKey), encryptionHelper.decrypt(secretKey), senderId, useType);
+					String res = smsService.sendCampaign(encryptionHelper.decrypt(apiKey),
+							encryptionHelper.decrypt(secretKey), useType, phone, message, senderId);
+					logger.info("Result is {}",res);
+				} catch (InterruptedException e) {
+					logger.error("\n\nMessage is {} and exception is {}\n\n\n\n\n",e.getMessage(),e);
+				}
+				
 			}
 		}
+	}
+
+	public String getReport(String startDate, String endDate) {
+		return smsService.reports("prod",apiKey,secretKey,"2019-12-01","2020-01-30");
+		
 	}
 
 }

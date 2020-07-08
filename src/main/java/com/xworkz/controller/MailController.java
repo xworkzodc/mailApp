@@ -109,6 +109,8 @@ public class MailController {
 	
 	public ModelAndView sendMail(SendMailDTO dto) {
 		ModelAndView modelAndView=new ModelAndView("index.jsp");
+		 logger.info("List Name="+dto.getListName());
+		 logger.info("Msg Id="+dto.getMsgType());
 		String listId=clientService.getListIdFromListName(dto.getListName(),dto.getMsgType());
 		if(listId!=null) {
 			logger.info("list Id Is Fetched..........................");
@@ -149,7 +151,7 @@ public class MailController {
 
 	private ModelAndView send(ModelAndView modelAndView, boolean result) {
 		if(result) {
-			modelAndView.addObject("msg", "Mail Is Sended Successfully...................");
+			modelAndView.addObject("msg", "Mail sent Successfully...................");
 			logger.info("Mail Is Sended Successfully...................");
 			return modelAndView;
 		}else {
@@ -157,5 +159,13 @@ public class MailController {
 			logger.error("Mail Was Not Sended................");
 			return modelAndView;
 		}
+	}
+	
+	
+	@RequestMapping(value = "/getReport.do",produces = "application/JSON",method= RequestMethod.GET)
+	@ResponseBody
+	public String data() {
+		logger.info("Came here..............");
+		return xworkzService.getReport("", "");
 	}
 }

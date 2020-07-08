@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class SendMailDTO {
 
+	private Integer msgType;
 	private String subName;
 	private String listName;
 	private String imageURL;
@@ -18,7 +19,7 @@ public class SendMailDTO {
 	private String fees;
 	private String fileName;
 	private String time;
-	private Integer msgType;
+	
 
 	public Integer getMsgType() {
 		return msgType;

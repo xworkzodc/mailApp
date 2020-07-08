@@ -77,6 +77,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="col-md-6">
 						<h3>
 							<b>${msg}</b>
+							<b>${loginsuccess}</b>
+							<b>${loginfaildbypasswod}</b>
 						</h3>
 					</div>
 					<div class="col-md-3"></div>
@@ -90,7 +92,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="panel panel-default">
 						<div class="panel-heading" align="center">
 							<h4 style="margin-top: 8%; color: white;">
-								<b>Mail Details</b>
+								<b>Mail Details</b><br><br>
+								<b>Select MailId To Check The Lists</b>
 							</h4>
 						</div>
 						<div class="panel-body" align="center" style="margin-top: 2%">
@@ -137,6 +140,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<td colspan="2" align="center"><h3>
 												<b>News Feed</b>
 											</h3></td>
+									</tr>
+									<tr>
+									<td style=""><h5>
+												Mail ID<sup>*</sup>:
+											</h5></td>
+									   <td>
+									    <select class="custom-select custom-select-lg sm-3" name="msgType">
+										<option  value="0">X-workz.in</option>
+										<option  value="1">Gmail.com</option>
+									</select>
+									  </td>
 									</tr>
 									<tr>
 										<td><h5>
@@ -187,6 +201,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<td colspan="2" align="center"><h3>New Joiner</h3></td>
 									</tr>
 									<tr>
+									<tr>
+									<td style=""><h5>
+												Mail ID<sup>*</sup>:
+											</h5></td>
+									   <td>
+									    <select class="custom-select custom-select-lg sm-3" name="msgType">
+										<option  value="0">X-workz.in</option>
+										<option  value="1">Gmail.com</option>
+									</select>
+									  </td>
+									</tr>
 										<td style=""><h5>
 												Subject Name<sup>*</sup>:
 											</h5></td>
@@ -226,6 +251,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									style="color: white">
 									<tr>
 										<td colspan="2" align="center"><h3>Fees Payment</h3></td>
+									</tr>
+									<tr>
+									<td style=""><h5>
+												Mail ID<sup>*</sup>:
+											</h5></td>
+									   <td>
+									    <select class="custom-select custom-select-lg sm-3" name="msgType">
+										<option  value="0">X-workz.in</option>
+										<option  value="1">Gmail.com</option>
+									</select>
+									  </td>
 									</tr>
 									<tr>
 										<td style=""><h5>
@@ -280,6 +316,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<td colspan="2" align="center"><h3>Birthday Greeting</h3></td>
 									</tr>
 									<tr>
+									<td style=""><h5>
+												Mail ID<sup>*</sup>:
+											</h5></td>
+									   <td>
+									    <select class="custom-select custom-select-lg sm-3" name="msgType">
+										<option  value="0">X-workz.in</option>
+										<option  value="1">Gmail.com</option>
+									</select>
+									  </td>
+									</tr>
+									<tr>
 										<td style=""><h5>
 												Subject Name<sup>*</sup>:
 											</h5></td>
@@ -326,6 +373,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									style="color: white">
 									<tr>
 										<td colspan="2" align="center"><h3>Course Content</h3></td>
+									</tr>
+									<tr>
+									<td style=""><h5>
+												Mail ID<sup>*</sup>:
+											</h5></td>
+									   <td>
+									    <select class="custom-select custom-select-lg sm-3" name="msgType">
+										<option  value="0">X-workz.in</option>
+										<option  value="1">Gmail.com</option>
+									</select>
+									  </td>
 									</tr>
 									<tr>
 										<td style=""><h5>
