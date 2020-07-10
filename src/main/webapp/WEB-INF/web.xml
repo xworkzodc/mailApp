@@ -6,7 +6,7 @@ id="WebApp_ID" version="3.0">
 	<display-name>Archetype Created Web Application</display-name>
 	
      <welcome-file-list>
-     <welcome-file>Login.jsp</welcome-file>
+     <welcome-file>/jsp/Login.jsp</welcome-file>
      </welcome-file-list>
      
 	<servlet>

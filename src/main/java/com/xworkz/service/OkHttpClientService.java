@@ -23,6 +23,11 @@ import com.xworkz.dto.MailChimpList;
 import com.xworkz.dto.MailChimpMailDetails;
 import com.xworkz.dto.SendMailDTO;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Service
 @Configuration
 public class OkHttpClientService {
@@ -45,7 +50,7 @@ public class OkHttpClientService {
 	@Value("${http1}")
 	private String http1;
 
-	static Logger logger = LoggerFactory.getLogger(OkHttpClientService.class);
+	private Logger logger = LoggerFactory.getLogger(OkHttpClientService.class);
 
 	public OkHttpClientService() {
 		logger.info("{} is created..........", this.getClass().getCanonicalName());
@@ -268,12 +273,11 @@ public class OkHttpClientService {
 	}
 
 	public String getAllMailChimpList(Integer mailid) {
-		logger.info("qwertyuiop asdfghjkl zxcvbnm {} {}",mailid);
 		String a = "";
 		String rt = "";
 		String fn = "";
 		String htp = "";
-		if (mailid == 1) {
+		if (mailid == 1) {  
 			a = auth1;
 			rt = replyTo1;
 			fn = fromName1;

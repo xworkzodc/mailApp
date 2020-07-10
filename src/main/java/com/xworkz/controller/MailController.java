@@ -24,6 +24,13 @@ import com.xworkz.dto.SendMailDTO;
 import com.xworkz.service.OkHttpClientService;
 import com.xworkz.service.XworkzService;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 @RestController
 @RequestMapping("/")
 public class MailController {
@@ -33,7 +40,7 @@ public class MailController {
 	@Value("${replyTo}")
 	private String replyTo1;
 	@Value("${fromName}")
-	private String fromName1;
+	private String fromName1;  
 	
 	
 	@Autowired
@@ -41,7 +48,7 @@ public class MailController {
 	@Autowired
 	private OkHttpClientService clientService;
 	
-	static Logger logger = LoggerFactory.getLogger(MailController.class);
+	private Logger logger = LoggerFactory.getLogger(MailController.class);
 	
 	public MailController() {
 		logger.info("{} Is Created...........",this.getClass().getSimpleName());
@@ -51,7 +58,7 @@ public class MailController {
 	public ModelAndView sendSMS(@RequestParam("uploadFile") MultipartFile file,@RequestParam("msg") String msg) {
 		logger.info("is called....");
 		
-		ModelAndView modelAndView = new ModelAndView("index.jsp");
+		ModelAndView modelAndView = new ModelAndView("index");
 		if (!file.isEmpty()) {
 			logger.debug("contant type {}", file.getContentType());
 			List<String> contactList =xworkzService.getContactListFromXls(file);
@@ -78,7 +85,7 @@ public class MailController {
 	
 	@RequestMapping(value="newsfeed.do",method=RequestMethod.POST)
 	public ModelAndView sendNewsFeed(@ModelAttribute SendMailDTO mailDTO) {
-//		logger.info("Image Url Is {}",mailDTO.getImageURL());
+		logger.info("Image Url Is {}",mailDTO.getImageURL());
 		return sendMail(mailDTO);
 	}
 	
@@ -108,7 +115,7 @@ public class MailController {
 	}
 	
 	public ModelAndView sendMail(SendMailDTO dto) {
-		ModelAndView modelAndView=new ModelAndView("index.jsp");
+		ModelAndView modelAndView=new ModelAndView("index");
 		 logger.info("List Name="+dto.getListName());
 		 logger.info("Msg Id="+dto.getMsgType());
 		String listId=clientService.getListIdFromListName(dto.getListName(),dto.getMsgType());

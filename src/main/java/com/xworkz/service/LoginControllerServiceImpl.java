@@ -3,81 +3,53 @@ package com.xworkz.service;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
-
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
-import com.xworkz.dao.LoginControllerDAO;
+import org.springframework.ui.ModelMap;
 import com.xworkz.dto.LoginDTO;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Service
 public class LoginControllerServiceImpl implements LoginControllerService {
 
-	static Logger logger = LoggerFactory.getLogger(LoginControllerServiceImpl.class);
+	private Logger logger = LoggerFactory.getLogger(LoginControllerServiceImpl.class);
 
 	public String temporaryPass;
-
 	public LocalTime mailsentTime;
-
 	public LocalTime loginTime;
 
 	@Autowired
-	private LoginControllerDAO loginDAO;
-
-	@Autowired
 	private SpringMailService mailService;
+
+	@Value("${to.MailID}")
+	private String toMailId;
+	@Value("${to.MailSubject}")
+	private String toMailSubject;
 
 	public LoginControllerServiceImpl() {
 		logger.info("{} Is Created...........", this.getClass().getSimpleName());
 	}
 
-	public static Logger getLogger() {
-		return logger;
-	}
-
-	public static void setLogger(Logger logger) {
-		LoginControllerServiceImpl.logger = logger;
-	}
-
-	public LoginControllerDAO getLoginDAO() {
-		return loginDAO;
-	}
-
-	public void setLoginDAO(LoginControllerDAO loginDAO) {
-		this.loginDAO = loginDAO;
-	}
-
-	public SpringMailService getMailService() {
-		return mailService;
-	}
-
-	public void setMailService(SpringMailService mailService) {
-		this.mailService = mailService;
-	}
-
 	@Override
-	public boolean validateAndLogin(LoginDTO dto, Model model) {
+	public boolean validateAndLogin(LoginDTO dto, ModelMap model, HttpServletRequest request) {
 		logger.info("invoked validateAndLogin...");
 
 		String givenPassword = dto.getPassword();
-		logger.info("givenPassword=" + givenPassword);
-
-		logger.info("temporaryPass=" + temporaryPass);
-
 		loginTime = LocalTime.now();
-
-		logger.info("Logintime=" + loginTime);
-
+		logger.info("Logintime : {}", loginTime);
 		Duration timeElapsed = Duration.between(mailsentTime, loginTime);
-
 		long diffrencetime = timeElapsed.toMinutes();
+		logger.info("Time taken : {}", diffrencetime + " minutes");
 
-		logger.info("Time taken: " + diffrencetime + " minutes");
-
-		if (diffrencetime<=10 && temporaryPass != null && givenPassword.equals(temporaryPass)) {
+		if (diffrencetime <= 10 && temporaryPass != null && givenPassword.equals(temporaryPass)) {
 			logger.info("givenPassword is correct");
 			return true;
 		} else {
@@ -88,24 +60,24 @@ public class LoginControllerServiceImpl implements LoginControllerService {
 	}
 
 	@Override
-	public boolean generateOTP() {
+	public boolean generateOTP(HttpServletRequest request) {
 		logger.info("invoked generateOTP in service...");
 
 		try {
-			String onetimepass = loginDAO.genarateOTP();
-			temporaryPass = onetimepass;
+			String onetimepass = genarateRandomOTP();
+			 temporaryPass = onetimepass;
 			if (Objects.nonNull(onetimepass)) {
 				logger.info("onetimepass generated in service...");
-				String mailID = "contact@x-workz.in";
-				String subject = "Xworkz Bulk Mail App OTP";
-				String body = "Hi  X-workzodc" + "\n Your Xworkz Bulk Mail App, One Time Password is = " + onetimepass
+				String mailID = toMailId;
+				String subject = toMailSubject;
+				String body = "Hi X-workzodc" + "\n Your Xworkz Bulk Mail App, One Time Password is = " + onetimepass
 						+ "\n Its' valid for 10 Minutes.";
 				boolean mailvalidation = mailService.validateAndSendMailByMailId(mailID, subject, body);
 
 				if (mailvalidation) {
 					logger.info("success", "Your Password sent to your mailID");
 					mailsentTime = LocalTime.now();
-					logger.info("MailsentTime=" + mailsentTime);
+					logger.info("MailsentTime: {}", mailsentTime);
 					return true;
 				} else {
 					logger.info("faild", "Password can't able send to your mailID!");
@@ -120,5 +92,11 @@ public class LoginControllerServiceImpl implements LoginControllerService {
 		}
 		return false;
 
+	}
+
+	@Override
+	public String genarateRandomOTP() {
+		String newRandomPassword = RandomStringUtils.randomNumeric(6);
+		return newRandomPassword;
 	}
 }

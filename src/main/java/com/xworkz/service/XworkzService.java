@@ -12,6 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.xworkz.util.EncryptionHelper;
 import com.xworkz.util.ExcelHelper;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Service
 public class XworkzService {
 
