@@ -13,22 +13,22 @@ public class Stats implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String member_count;
-	String unsubscribe_count;
-	String cleaned_count;
-	String member_count_since_send;
-	String unsubscribe_count_since_send;
-	String cleaned_count_since_send;
-	String campaign_count;
-	String campaign_last_sent;
-	String merge_field_count;
-	String avg_sub_rate;
-	String avg_unsub_rate;
-	String target_sub_rate;
-	String open_rate;
-	String click_rate;
-	String last_sub_date;
-	String last_unsub_date;
+	String memberCount;
+	String unsubscribeCount;
+	String cleanedCount;
+	String memberCountSinceSend;
+	String unsubscribeCountSinceSend;
+	String cleanedCountSinceSend;
+	String campaignCount;
+	String campaignLastSent;
+	String mergeFieldCount;
+	String avgSubRate;
+	String avgUnsubRate;
+	String targetSubRate;
+	String openRate;
+	String clickRate;
+	String lastSubDate;
+	String lastUnsubDate;
 
 	public Stats() {
 

@@ -1,30 +1,20 @@
 package com.xworkz.controller;
 
-
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.xworkz.dto.LoginDTO;
-import com.xworkz.service.LoginControllerService;
+import com.xworkz.service.LoginService;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-@Getter
-@Setter
-@ToString
 @RestController
 @RequestMapping("/")
 public class LoginController {
@@ -33,16 +23,17 @@ public class LoginController {
 
 	@Value("${login.username}")
 	private String username;
-	
+
 	@Autowired
-	private LoginControllerService loginService;
+	private LoginService loginService;
 
 	public LoginController() {
 		logger.info("{} Is Created...........", this.getClass().getSimpleName());
 	}
 
 	@RequestMapping(value = "/otp.do", method = RequestMethod.POST)
-	public ModelAndView generateOTP(@ModelAttribute LoginDTO dto, ModelMap model,HttpServletRequest httpServletRequest) {
+	public ModelAndView generateOTP(@ModelAttribute LoginDTO dto, ModelMap model,
+			HttpServletRequest httpServletRequest) {
 		logger.info("invoked generateOTP()...");
 		ModelAndView modelAndView = new ModelAndView("Login");
 		try {
@@ -50,11 +41,12 @@ public class LoginController {
 			if (dto.getUserName().equals(username)) {
 				if (loginService.generateOTP(httpServletRequest))
 					model.addAttribute("Successmsg", "One-time password has been sent to your Email id.");
-				    logger.info("OTP Sent Successfully TO Your Email ID");
-				    return modelAndView;
+				logger.info("OTP Sent Successfully TO Your Email ID");
+				return modelAndView;
 
 			} else {
-				model.addAttribute("Failmsg", "Failed to send OTP, The Username supplied was not valid. Please try again!");
+				model.addAttribute("Failmsg",
+						"Failed to send OTP, The Username supplied was not valid. Please try again!");
 				logger.info("OTP Sent Failed ,Check The UserId!");
 			}
 		} catch (Exception e) {
@@ -65,11 +57,11 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public ModelAndView  onLogin(@ModelAttribute LoginDTO dto, ModelMap model,HttpServletRequest httpServletRequest) {
+	public ModelAndView onLogin(@ModelAttribute LoginDTO dto, ModelMap model, HttpServletRequest httpServletRequest) {
 		logger.info("invoked onLogin()...");
 		try {
-			
-			boolean validation = this.loginService.validateAndLogin(dto, model,httpServletRequest);
+
+			boolean validation = this.loginService.validateAndLogin(dto);
 			if (validation) {
 				model.addAttribute("loginsuccess", "You have successfully logged in.");
 				logger.info("Logined Successfully, UserName and Password Macthed.");
@@ -77,8 +69,10 @@ public class LoginController {
 			}
 
 			else {
-				model.addAttribute("loginfaildbypasswod", "The OTP entered is invalid or expired. Please generate a new OTP and try again.");
-				logger.info("Login Faild! ,The OTP entered is invalid or expired. Please generate a new OTP and try again.");
+				model.addAttribute("loginfaildbypasswod",
+						"The OTP entered is invalid or expired. Please generate a new OTP and try again.");
+				logger.info(
+						"Login Faild! ,The OTP entered is invalid or expired. Please generate a new OTP and try again.");
 				return new ModelAndView("Login");
 			}
 		} catch (Exception e) {

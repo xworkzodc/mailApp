@@ -5,35 +5,33 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class MailChimpCampaign implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	String id;
-	long web_id;
+	long webId;
 	String type;
-	String create_time;
-	String archive_url;
-	String long_archive_url;
+	String createTime;
+	String archiveURL;
+	String longArchiveURL;
 	String status;
-	long emails_sent;
-	String send_time;
-	String content_type;
-	boolean needs_block_refresh;
+	long emailSent;
+	String sentTime;
+	String contentType;
+	boolean needsBlockRefresh;
 	boolean resendable;
 	
 	
 	MailChimpRecipients recipients;
 	MailChimpSettings settings;
 	MailChimpTracker tracking;
-	MailChimpReport report_summary;
-	MailChimpDeliveryStatus delivery_status;
-	List<Links> _links;
+	MailChimpReport reportSummary;
+	MailChimpDeliveryStatus deliveryStatus;
+	List<Links> links;
 	
 	public MailChimpCampaign() {
 	}

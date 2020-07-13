@@ -14,11 +14,11 @@ public class MailChimpReport implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	long opens;
-	long unique_opens;
-	String open_rate;
+	long uniqueOpens;
+	String openRate;
 	long clicks;
-	long subscriber_clicks;
-	long click_rate;
+	long subscriberClicks;
+	long clickRate;
 
 	MailChimpEcommerce ecommerce;
 

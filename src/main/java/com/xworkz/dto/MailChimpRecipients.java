@@ -13,11 +13,11 @@ public class MailChimpRecipients implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String list_id;
-	boolean list_is_active;
-	String list_name;
-	String segment_text;
-	String recipient_count;
+	String listId;
+	boolean listIsActive;
+	String listName;
+	String segmentText;
+	String recipientCount;
 
 	public MailChimpRecipients() {
 	}

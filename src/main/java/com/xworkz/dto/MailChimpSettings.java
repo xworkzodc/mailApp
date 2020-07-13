@@ -14,17 +14,17 @@ public class MailChimpSettings implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	String title;
-	boolean use_conversation;
-	String to_name;
-	String folder_id;
+	boolean useConversation;
+	String toName;
+	String folderId;
 	boolean authenticate;
-	boolean auto_footer;
-	boolean inline_css;
-	boolean auto_tweet;
-	boolean fb_comments;
+	boolean autoFooter;
+	boolean inlineCss;
+	boolean autoTweet;
+	boolean fbComments;
 	boolean timewarp;
-	long template_id;
-	boolean drag_and_drop;
+	long templateId;
+	boolean dragAndDrop;
 
 	public MailChimpSettings() {
 	}

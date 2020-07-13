@@ -14,11 +14,11 @@ public class MailChimpTracker implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	boolean opens;
-	boolean html_clicks;
-	boolean text_clicks;
-	boolean goal_tracking;
+	boolean htmlClicks;
+	boolean textClicks;
+	boolean goalTracking;
 	boolean ecomm360;
-	String google_analytics;
+	String googleAnalytics;
 	String clicktale;
 
 	public MailChimpTracker() {
