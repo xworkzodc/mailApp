@@ -28,6 +28,17 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
      
+    <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+    <property name="prefix" value="classpath:/templates/" />
+    <property name="suffix" value=".html" />
+    <property name="templateMode" value="HTML5" />
+</bean>
+
+<bean id="templateEngine"
+      class="org.thymeleaf.spring5.SpringTemplateEngine">
+  <property name="templateResolver" ref="templateResolver" />
+  <property name="enableSpringELCompiler" value="true" />
+</bean>
 
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">

@@ -10,7 +10,7 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" /> -->
 <style type="text/css">
 .backgroundImage {
-	background-image: url("https://raw.githubusercontent.com/vinay-coder1/xworkz-bulk-mail-app/master/prism.png");
+	background-image: url("https://raw.githubusercontent.com/xworkzodc/mailApp/master/prism.png");
 	/* Center and scale the image nicely */
 	background-repeat: repeat;
 	height: 100%;

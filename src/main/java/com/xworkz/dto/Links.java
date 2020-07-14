@@ -11,11 +11,11 @@ public class Links implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	String rel;
-	String href;
-	String method;
-	String targetSchema;
-	String schema;
+	private String rel;
+	private String href;
+	private String method;
+	private String targetSchema;
+	private String schema;
 
 	public Links() {
 	}

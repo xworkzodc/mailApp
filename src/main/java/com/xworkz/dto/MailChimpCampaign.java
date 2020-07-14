@@ -12,26 +12,25 @@ public class MailChimpCampaign implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	String id;
-	long webId;
-	String type;
-	String createTime;
-	String archiveURL;
-	String longArchiveURL;
-	String status;
-	long emailSent;
-	String sentTime;
-	String contentType;
-	boolean needsBlockRefresh;
-	boolean resendable;
-	
-	
-	MailChimpRecipients recipients;
-	MailChimpSettings settings;
-	MailChimpTracker tracking;
-	MailChimpReport reportSummary;
-	MailChimpDeliveryStatus deliveryStatus;
-	List<Links> links;
+	private String id;
+	private long webId;
+	private String type;
+	private String createTime;
+	private String archiveURL;
+	private String longArchiveURL;
+	private String status;
+	private long emailSent;
+	private String sentTime;
+	private String contentType;
+	private boolean needsBlockRefresh;
+	private boolean resendable;
+		
+	private MailChimpRecipients recipients;
+	private MailChimpSettings settings;
+	private MailChimpTracker tracking;
+	private MailChimpReport reportSummary;
+	private MailChimpDeliveryStatus deliveryStatus;
+	private List<Links> links;
 	
 	public MailChimpCampaign() {
 	}

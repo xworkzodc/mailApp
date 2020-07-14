@@ -12,9 +12,9 @@ public class MailChimpCampaignList implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	List<MailChimpCampaign> campaigns;
-	long totalItems;
-	List<Links> links;
+	private List<MailChimpCampaign> campaigns;
+	private long totalItems;
+	private List<Links> links;
 	
 	public MailChimpCampaignList() {
 	}

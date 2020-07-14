@@ -12,9 +12,9 @@ public class MailChimpList implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	List<MailChimpMailDetails> lists;
-	int totalItems;
-	List<Links> links;
+	private List<MailChimpMailDetails> lists;
+	private int totalItems;
+	private List<Links> links;
 
 	public MailChimpList() {
 	}

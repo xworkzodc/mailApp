@@ -1,12 +1,10 @@
 package com.xworkz.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,20 +30,19 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/otp.do", method = RequestMethod.POST)
-	public ModelAndView generateOTP(@ModelAttribute LoginDTO dto, ModelMap model,
-			HttpServletRequest httpServletRequest) {
+	public ModelAndView generateOTP(@ModelAttribute LoginDTO dto) {
 		logger.info("invoked generateOTP()...");
 		ModelAndView modelAndView = new ModelAndView("Login");
 		try {
-			model.addAttribute("dto", dto);
+			modelAndView.addObject("dto", dto);
 			if (dto.getUserName().equals(username)) {
-				if (loginService.generateOTP(httpServletRequest))
-					model.addAttribute("Successmsg", "One-time password has been sent to your Email id.");
+				if (loginService.generateOTP())
+					modelAndView.addObject("Successmsg", "One-time password has been sent to your Email id.");
 				logger.info("OTP Sent Successfully TO Your Email ID");
 				return modelAndView;
 
 			} else {
-				model.addAttribute("Failmsg",
+				modelAndView.addObject("Failmsg",
 						"Failed to send OTP, The Username supplied was not valid. Please try again!");
 				logger.info("OTP Sent Failed ,Check The UserId!");
 			}
@@ -57,10 +54,9 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public ModelAndView onLogin(@ModelAttribute LoginDTO dto, ModelMap model, HttpServletRequest httpServletRequest) {
+	public ModelAndView onLogin(@ModelAttribute LoginDTO dto, Model model) {
 		logger.info("invoked onLogin()...");
 		try {
-
 			boolean validation = this.loginService.validateAndLogin(dto);
 			if (validation) {
 				model.addAttribute("loginsuccess", "You have successfully logged in.");

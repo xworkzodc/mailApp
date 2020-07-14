@@ -11,10 +11,10 @@ public class CampaignDefault implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	String fromName;
-	String fromEmail;
-	String subject;
-	String language;
+	private String fromName;
+	private String fromEmail;
+	private String subject;
+	private String language;
 	
 	
 	public CampaignDefault() {

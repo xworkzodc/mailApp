@@ -11,7 +11,7 @@ public class MailChimpDeliveryStatus implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	boolean enabled;
+	private boolean enabled;
 
 	public MailChimpDeliveryStatus() {
 		super();

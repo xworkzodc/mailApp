@@ -12,31 +12,31 @@ public class MailChimpMailDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String id;
-	String webId;
-	String name;
+	private String id;
+	private String webId;
+	private String name;
 
-	String permissionReminder;
-	String useArchiveBar;
+	private String permissionReminder;
+	private String useArchiveBar;
 
-	String notifyOnSubscribe;
-	String notifyOnUnsubscribe;
-	String dateCreated;
-	String listRating;
-	String emailTypeOption;
-	String subscribeUrlShort;
-	String subscribeUrlLong;
-	String beamerAddress;
-	String visibility;
-	String doubleOptin;
-	String hasWelcome;
-	String marketingPermissions;
-	String[] modules;
+	private String notifyOnSubscribe;
+	private String notifyOnUnsubscribe;
+	private String dateCreated;
+	private String listRating;
+	private String emailTypeOption;
+	private String subscribeUrlShort;
+	private String subscribeUrlLong;
+	private String beamerAddress;
+	private String visibility;
+	private String doubleOptin;
+	private String hasWelcome;
+	private String marketingPermissions;
+	private String[] modules;
 
-	Stats stats;
-	CampaignDefault campaignDefaults;
-	List<Links> links;
-	ContactDetails contact;
+	private Stats stats;
+	private CampaignDefault campaignDefaults;
+	private List<Links> links;
+	private ContactDetails contact;
 
 	public MailChimpMailDetails() {
 	}

@@ -11,9 +11,9 @@ public class MailChimpEcommerce implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	long totalOrders;
-	long totalSpent;
-	long totalRevenue;
+	private long totalOrders;
+	private long totalSpent;
+	private long totalRevenue;
 
 	public MailChimpEcommerce() {
 

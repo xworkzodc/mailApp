@@ -4,31 +4,29 @@ import java.io.Serializable;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class Stats implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	String memberCount;
-	String unsubscribeCount;
-	String cleanedCount;
-	String memberCountSinceSend;
-	String unsubscribeCountSinceSend;
-	String cleanedCountSinceSend;
-	String campaignCount;
-	String campaignLastSent;
-	String mergeFieldCount;
-	String avgSubRate;
-	String avgUnsubRate;
-	String targetSubRate;
-	String openRate;
-	String clickRate;
-	String lastSubDate;
-	String lastUnsubDate;
+	private String memberCount;
+	private String unsubscribeCount;
+	private String cleanedCount;
+	private String memberCountSinceSend;
+	private String unsubscribeCountSinceSend;
+	private String cleanedCountSinceSend;
+	private String campaignCount;
+	private String campaignLastSent;
+	private String mergeFieldCount;
+	private String avgSubRate;
+	private String avgUnsubRate;
+	private String targetSubRate;
+	private String openRate;
+	private String clickRate;
+	private String lastSubDate;
+	private String lastUnsubDate;
 
 	public Stats() {
 
