@@ -9,7 +9,7 @@ body {
 }
 
 .backgroundImage {
-	background-image: url("/xworkzMaillApp/img/prism.png");
+	background-image: url("https://raw.githubusercontent.com/xworkzodc/mailApp/master/prism.png");
 	/* Center and scale the image nicely */
 	background-repeat: repeat;
 	height: 100%;

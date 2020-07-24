@@ -18,7 +18,7 @@
 	</appender>
 
 
-	<!-- <appender name="FILE-ENGINE"
+	<appender name="FILE-ENGINE"
 		class="ch.qos.logback.core.FileAppender">
 		<file>${USER_HOME}/log/emailLogfile${bySecond}.log</file>
 		<encoder>
@@ -29,15 +29,15 @@
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>ACCEPT</onMismatch>
 		</filter>
-	</appender> -->
+	</appender>
 
 	<logger name="com.xworkz.ombn" level="ALL" additivity="false">
-		<!-- <appender-ref ref="FILE-ENGINE" /> -->
+		<appender-ref ref="FILE-ENGINE" />
 		<appender-ref ref="STDOUT" />
 	</logger>
 
 	<root level="ALL">
-		<!-- <appender-ref ref="FILE-ENGINE" /> -->
+		<appender-ref ref="FILE-ENGINE" />
 		<appender-ref ref="STDOUT" />
 	</root>
 

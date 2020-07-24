@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class ExcelHelper {
 
@@ -25,6 +24,7 @@ public class ExcelHelper {
 	public List<String> getContactListFromInputStream(InputStream inputStream) {
 		List<String> mobileNumList = new ArrayList<String>();
 		try {
+			@SuppressWarnings("resource")
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet excelSheet = workbook.getSheetAt(0);
 			logger.info("Last Row Number Is: " + excelSheet.getLastRowNum());
