@@ -17,7 +17,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-
 		<poi.version>3.17</poi.version>
 		<lombok.version>1.18.12</lombok.version>
 		<spring.version>5.0.0.RELEASE</spring.version>
@@ -157,6 +156,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
@@ -314,12 +318,12 @@
 					<artifactId>appengine-maven-plugin</artifactId>
 					<version>${appengine-maven-plugin-version}</version>
 					<configuration>
-					<deploy.projectId>xworkz-mail-app</deploy.projectId>
-					<deploy.version>v01</deploy.version>
-					<stage.enableJarSplitting>true</stage.enableJarSplitting>
-					<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
-					<cloudSdkPath>/usr/foo/path/to/cloudsdk</cloudSdkPath>
-				</configuration>
+						<deploy.projectId>xworkz-mail-app</deploy.projectId>
+						<deploy.version>v01</deploy.version>
+						<stage.enableJarSplitting>true</stage.enableJarSplitting>
+						<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
+						<cloudSdkPath>/usr/foo/path/to/cloudsdk</cloudSdkPath>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
