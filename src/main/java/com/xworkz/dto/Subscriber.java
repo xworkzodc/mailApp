@@ -22,7 +22,7 @@ public class Subscriber implements Serializable {
 
 	}
 
-	public Subscriber(Date date, String fullName, String email) {
+	public Subscriber(String fullName, String email, Date date) {
 		this.dob = date;
 		this.fullName = fullName;
 		this.emailId = email;

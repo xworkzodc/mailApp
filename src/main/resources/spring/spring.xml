@@ -57,9 +57,13 @@
 			</props>
 		</property>
 	</bean>
-	
+    <bean id="myTriggerId" class="org.springframework.scheduling.support.CronTrigger">
+    <constructor-arg name="expression" value="0 0 8 * * ?"/>
+    <constructor-arg name="timeZone" value="IST"/>
+    </bean>
+
     <task:scheduled-tasks scheduler="myScheduler">
-		<task:scheduled ref="emailService" method="birthadyMailSender" cron="0 0 8 * * ?" />
+		<task:scheduled ref="emailService" method="birthadyMailSender" trigger="myTriggerId"/>
 	</task:scheduled-tasks>
 
 	<task:scheduler id="myScheduler" pool-size="10" />
