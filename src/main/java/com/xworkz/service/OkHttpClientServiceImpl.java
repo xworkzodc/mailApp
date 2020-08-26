@@ -1,14 +1,14 @@
 package com.xworkz.service;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -316,11 +316,19 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	public String getHTMLTextFromFile(SendMailDTO dto) {
 		String data = "";
 		try {
-			File resource = new ClassPathResource("/html/" + dto.getFileName()).getFile();
-			data = new String(Files.readAllBytes(resource.toPath()));
-			logger.info("String is {}", data);
+			URL url = new URL("https://raw.githubusercontent.com/xworkzodc/newsfeed/master/bulk-mail-templets/"+dto.getFileName());
+			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+			int responseCode = httpConn.getResponseCode();
+			logger.info("responseCode=" + responseCode);
+
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				logger.info("opening html file..........");				
+		    InputStream inputStream = httpConn.getInputStream();
+			data = IOUtils.toString(inputStream);
+			logger.info("html String is {}", data);
 			data = replaceHTMLData(dto, data);
 			logger.info("After Change the dynamic news {}", data);
+			}
 		} catch (IOException e) {
 			logger.error("Exception is {} and message is {}", e, e.getMessage());
 		}

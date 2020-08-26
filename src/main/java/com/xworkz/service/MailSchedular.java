@@ -82,7 +82,6 @@ public class MailSchedular {
 			int responseCode = httpConn.getResponseCode();
 			System.out.println("responseCode=" + responseCode);
 
-			
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				Workbook workbook = null;
 				logger.info("Staring..........");
