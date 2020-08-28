@@ -23,13 +23,12 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
-
 import com.xworkz.dto.Subscriber;
 
 @Service("emailService")
-public class MailSchedular {
+public class MailSchedularServiceImpl implements MailSchedularService{
 
-	private Logger logger = LoggerFactory.getLogger(MailSchedular.class);
+	private Logger logger = LoggerFactory.getLogger(MailSchedularServiceImpl.class);
 
 	@Autowired
 	private SpringMailService emailService;
@@ -42,7 +41,7 @@ public class MailSchedular {
 	private String mailFrom;
 
 	public void birthadyMailSender() throws URISyntaxException, IOException {
-		logger.info("Invoked birthadyMailSender");
+		logger.info("Invoked birthadyMailSender in service");
 		List<Subscriber> subcriberList = getListOfSubscribersFromExcel();
 
 		for (Subscriber subscriber : subcriberList) {
@@ -50,10 +49,10 @@ public class MailSchedular {
 			Date date = new Date();
 
 			logger.info("local date " + formatter.format(date));
-			logger.info("subscriber dob " + subscriber.getDob() + " Formated " + formatter.format(subscriber.getDob()));
-			logger.info("Macthed DOB " + formatter.format(subscriber.getDob()).equals(formatter.format(date)));
-
+			logger.info( "Subcriber dob Formated " + formatter.format(subscriber.getDob()));
+			
 			if (formatter.format(subscriber.getDob()).equals(formatter.format(date))) {
+				logger.info("subscriber =" + subscriber.getFullName() +" Macthed DOB =" + formatter.format(subscriber.getDob()).equals(formatter.format(date)));
 				Context context1 = new Context();
 				context1.setVariable("subcriberName", subscriber.getFullName());
 
@@ -67,6 +66,9 @@ public class MailSchedular {
 					messageHelper.setText(content, true);
 				};
 				emailService.validateAndSendMailByMailId(messagePreparator);
+			}
+			else {
+				logger.info("No Subscriber Birthady found for Today's Date="+date);
 			}
 		}
 
@@ -82,6 +84,7 @@ public class MailSchedular {
 			int responseCode = httpConn.getResponseCode();
 			System.out.println("responseCode=" + responseCode);
 
+			
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				Workbook workbook = null;
 				logger.info("Staring..........");

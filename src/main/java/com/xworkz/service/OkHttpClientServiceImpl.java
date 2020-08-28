@@ -316,7 +316,7 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	public String getHTMLTextFromFile(SendMailDTO dto) {
 		String data = "";
 		try {
-			URL url = new URL("https://raw.githubusercontent.com/xworkzodc/newsfeed/master/bulk-mail-templets/"+dto.getFileName());
+			URL url = new URL("https://raw.githubusercontent.com/xworkzodc/newsfeed/bulk_mailTemplets/bulk-mail-templets/"+dto.getFileName());
 			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 			int responseCode = httpConn.getResponseCode();
 			logger.info("responseCode=" + responseCode);
