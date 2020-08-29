@@ -222,6 +222,13 @@
 			<version>${appengine.target.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-logging -->
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-logging</artifactId>
+			<version>1.101.2</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.google.cloud.samples/shared-configuration -->
 		<dependency>
 			<groupId>com.google.cloud.samples</groupId>
