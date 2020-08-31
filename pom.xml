@@ -17,15 +17,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<poi.version>4.1.2</poi.version>
+		<poi.version>3.17</poi.version>
 		<lombok.version>1.18.12</lombok.version>
 		<spring.version>5.0.0.RELEASE</spring.version>
 		<commons-lang3.version>3.9</commons-lang3.version>
 		<commons-io.version>2.1</commons-io.version>
-		<poi-ooxml.version>4.1.2</poi-ooxml.version>
+		<poi-ooxml.version>3.17</poi-ooxml.version>
 		<org.json.version>20180813</org.json.version>
 		<xmlbeans.version>3.0.2</xmlbeans.version>
-		<poi-ooxml-schemas>4.1.2</poi-ooxml-schemas>
+		<poi-ooxml-schemas>3.17</poi-ooxml-schemas>
 		<commons-logging.version>1.1.1</commons-logging.version>
 		<logback-classic.version>1.2.3</logback-classic.version>
 		<logback-core.version>1.2.3</logback-core.version>
@@ -101,6 +101,12 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback-classic.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
@@ -180,8 +186,6 @@
 			<artifactId>poi</artifactId>
 			<version>${poi.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
-
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -222,13 +226,6 @@
 			<version>${appengine.target.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-logging -->
-		<dependency>
-			<groupId>com.google.cloud</groupId>
-			<artifactId>google-cloud-logging</artifactId>
-			<version>1.101.2</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.google.cloud.samples/shared-configuration -->
 		<dependency>
 			<groupId>com.google.cloud.samples</groupId>
@@ -236,6 +233,11 @@
 			<version>${shared-configuration.version}</version>
 			<type>pom</type>
 		</dependency>
+      <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-logging-logback</artifactId>
+      <version>0.118.1-alpha</version>
+      </dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-maven-plugin -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
@@ -327,7 +329,7 @@
 					<artifactId>appengine-maven-plugin</artifactId>
 					<version>${appengine-maven-plugin-version}</version>
 					<configuration>
-						<deploy.projectId>xworkz-mail-app</deploy.projectId>
+						<deploy.projectId>bulk-mail-app</deploy.projectId>
 						<deploy.version>v01</deploy.version>
 						<stage.enableJarSplitting>true</stage.enableJarSplitting>
 						<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>

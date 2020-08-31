@@ -52,11 +52,11 @@ public class MailSchedularServiceImpl implements MailSchedularService{
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM");
 			Date date = new Date();
 
-			logger.debug("local date {}",formatter.format(date));
-			logger.debug( "Subcriber dob Formated {}",formatter.format(subscriber.getDob()));
+			logger.info("local date {}",formatter.format(date));
+			logger.info( "Subcriber dob Formated {}",formatter.format(subscriber.getDob()));
 			
 			if (formatter.format(subscriber.getDob()).equals(formatter.format(date))) {
-				logger.debug("subscriber = {} Macthed DOB = {}" ,subscriber.getFullName(),formatter.format(subscriber.getDob()).equals(formatter.format(date)));
+				logger.info("subscriber = {} Macthed DOB = {}" ,subscriber.getFullName(),formatter.format(subscriber.getDob()).equals(formatter.format(date)));
 				Context context1 = new Context();
 				context1.setVariable("subcriberName", subscriber.getFullName());
 
@@ -70,9 +70,6 @@ public class MailSchedularServiceImpl implements MailSchedularService{
 					messageHelper.setText(content, true);
 				};
 				emailService.validateAndSendMailByMailId(messagePreparator);
-			}
-			else {
-				logger.debug("No Subscriber Birthady found for Today's Date= {}",date);
 			}
 		}
 

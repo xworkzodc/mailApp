@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xworkz.service.MailSchedularService;
 
 @RestController
-@RequestMapping("/corn")
+@RequestMapping("/cron")
 public class MailScheduleController {
 	
 	private Logger logger = LoggerFactory.getLogger(MailScheduleController.class);
