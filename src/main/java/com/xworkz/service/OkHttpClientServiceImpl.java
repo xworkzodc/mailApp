@@ -1,18 +1,21 @@
 package com.xworkz.service;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -21,6 +24,7 @@ import com.xworkz.dto.MailChimpCampaign;
 import com.xworkz.dto.MailChimpList;
 import com.xworkz.dto.MailChimpMailDetails;
 import com.xworkz.dto.SendMailDTO;
+import com.squareup.okhttp.MediaType;
 
 @Service
 @Configuration
@@ -43,6 +47,8 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	private String fromName1;
 	@Value("${http1}")
 	private String http1;
+	@Value("${bulkMailTemplate}")
+	private String templatesLink;
 	private Account accountId = Account.Default;
 
 	private Logger logger = LoggerFactory.getLogger(OkHttpClientServiceImpl.class);
@@ -316,13 +322,24 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	public String getHTMLTextFromFile(SendMailDTO dto) {
 		String data = "";
 		try {
-			File resource = new ClassPathResource("/html/" + dto.getFileName()).getFile();
-			data = new String(Files.readAllBytes(resource.toPath()));
-			logger.info("String is {}", data);
+			RestTemplate restTemplate = new RestTemplate();
+			URI url = new URI(templatesLink + dto.getFileName());
+			HttpHeaders headers = new HttpHeaders();
+			Charset utf8 = Charset.forName("UTF-8");
+			org.springframework.http.MediaType mediaType = new org.springframework.http.MediaType("text", "html", utf8);
+			headers.setContentType(mediaType);
+
+			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+			data = responseEntity.getBody();
+
+			logger.info("html String is {}", data);
 			data = replaceHTMLData(dto, data);
 			logger.info("After Change the dynamic news {}", data);
-		} catch (IOException e) {
-			logger.error("Exception is {} and message is {}", e, e.getMessage());
+            
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			logger.error("Error is {} and Message is {} ", e, e.getMessage());
 		}
 		return data;
 	}

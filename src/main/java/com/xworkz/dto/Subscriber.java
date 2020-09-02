@@ -1,8 +1,6 @@
 package com.xworkz.dto;
 
 import java.io.Serializable;
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,13 +14,13 @@ public class Subscriber implements Serializable {
 
 	private String fullName;
 	private String emailId;
-	private Date dob;
+	private double dob;
 
 	public Subscriber() {
-
+		
 	}
 
-	public Subscriber(String fullName, String email, Date date) {
+	public Subscriber(String fullName, String email, double date) {
 		this.dob = date;
 		this.fullName = fullName;
 		this.emailId = email;
