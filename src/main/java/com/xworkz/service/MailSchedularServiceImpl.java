@@ -10,15 +10,23 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -45,6 +53,8 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 	private String mailFrom;
 	@Value("${excelFilelink}")
 	private String excelFilelink;
+	@Value("${imagesJsonlink}")
+	private String imagesJsonlink;
 
 	public void birthadyMailSender() throws URISyntaxException, IOException {
 		logger.info("Invoked birthadyMailSender in service");
@@ -78,9 +88,25 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 
 				if ((formatedTodayDate).equals(formatedDob)) {
 					logger.info("subscriber = {} Macthed DOB = {}", subscriber.getFullName(),(formatedTodayDate).equals(formatedDob));
+					
+					RestTemplate restTemplate = new RestTemplate();
+					HttpHeaders headers = new HttpHeaders();
+					headers.setContentType(MediaType.APPLICATION_JSON);
+					HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+					ResponseEntity<String> responseEntity = restTemplate.exchange(imagesJsonlink, HttpMethod.GET, entity, String.class);
+					String data = responseEntity.getBody();
+
+					JSONObject jsonObject = new JSONObject(data);
+				    JSONArray arrayList = jsonObject.toJSONArray(jsonObject.names());				
+					Random random = new Random();
+					Integer randomInt =  random.nextInt(arrayList.length());
+					Object imageLink = arrayList.get(randomInt);
+					logger.info("birthday image link= {}",imageLink);
+					
+
 					Context context1 = new Context();
 					context1.setVariable("subcriberName", subscriber.getFullName());
-
+					context1.setVariable("imageLink", imageLink);
 					String content = templateEngine.process("birthdayMailTemplate", context1);
 					MimeMessagePreparator messagePreparator = mimeMessage -> {
 
@@ -126,6 +152,7 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 				Cell dobCell = row.getCell(ExcelFileColumn.ExcelFile_DOB_CELL);
 
 				subscribersList.add(new Subscriber(nameCell.getStringCellValue(), emailCell.getStringCellValue(),dobCell.getNumericCellValue()));
+				subscribersList.remove(0);
 				logger.info("No: {} Value: {} Data Is Read and Stored in List", (++i), nameCell.getStringCellValue());
 			}
 

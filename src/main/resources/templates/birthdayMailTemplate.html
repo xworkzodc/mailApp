@@ -11,15 +11,14 @@
     </style>
 </head>
 <body>
-
 	<p>
 	<h3>
 		<b> Wish you many more Happy returns of the day <div class="row" th:text="${subcriberName}"></div> </b>
 	</h3>
 	</p>
 	
-	<div>
-		<img src="https://raw.githubusercontent.com/xworkzodc/newsfeed/master/Birthday.jpg" style="width: 541px; height: 382px" />
+	<div id="wishesImage">
+		<img th:src="@{${imageLink}}" style="width: 541px; height: 382px"/>
 	</div>
 
 
