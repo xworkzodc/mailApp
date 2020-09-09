@@ -36,6 +36,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import com.xworkz.dto.Subscriber;
 import com.xworkz.util.ExcelFileColumn;
+import org.apache.poi.ss.usermodel.CellType;
 
 @Service("emailService")
 public class MailSchedularServiceImpl implements MailSchedularService {
@@ -62,8 +63,7 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 		try {
 			List<Subscriber> subcriberList = getListOfSubscribersFromExcel();
 
-			for (Subscriber subscriber : subcriberList) {
-
+			for (Subscriber subscriber : subcriberList) {   
 				Integer originaldate = (int) ((subscriber.getDob()) - 599);
 				String originalStringDate = originaldate.toString();
 				logger.info("originaldate {}", originalStringDate);
@@ -148,14 +148,16 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 			for (Row row : excelSheet) { // For each Row.
 
 				Cell nameCell = row.getCell(ExcelFileColumn.ExcelFile_NAME_CELL);
+                                nameCell.setCellType(CellType.STRING);
 				Cell emailCell = row.getCell(ExcelFileColumn.ExcelFile_EMAIL_CELL);
+                                emailCell.setCellType(CellType.STRING);
 				Cell dobCell = row.getCell(ExcelFileColumn.ExcelFile_DOB_CELL);
-
+                                dobCell.setCellType(CellType.NUMERIC);
+                
 				subscribersList.add(new Subscriber(nameCell.getStringCellValue(), emailCell.getStringCellValue(),dobCell.getNumericCellValue()));
-				subscribersList.remove(0);
 				logger.info("No: {} Value: {} Data Is Read and Stored in List", (++i), nameCell.getStringCellValue());
 			}
-
+                 subscribersList.remove(0);
 		} catch (IOException e) {
 			e.printStackTrace();
 			logger.error("Error is {} and Message is {}", e, e.getMessage());
