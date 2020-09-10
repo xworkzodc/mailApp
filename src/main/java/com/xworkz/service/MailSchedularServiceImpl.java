@@ -61,6 +61,7 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 	private String imagesJsonlink;
 	@Value("${ccmailID}")
 	private String ccmailID;
+	private String mailId;
 	@Autowired
 	private EncryptionHelper encryptionHelper;
 
@@ -76,22 +77,26 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 			if (Objects.nonNull(subcriberList)) {
 				for (Subscriber subscriber : subcriberList) {
 					logger.info("subsribers=", subscriber.toString());
-					Integer originaldate = (int) ((subscriber.getDob()) - MailSchedularConstants.ExcelCell_Dycription_value);
+					Integer originaldate = (int) ((subscriber.getDob())
+							- MailSchedularConstants.ExcelCell_Dycription_value);
 					String originalStringDate = originaldate.toString();
 					logger.info("originaldate {}", originalStringDate);
 
 					originalStringDate = validateDOBLength(originaldate, originalStringDate);
 
-					SimpleDateFormat formatter1 = new SimpleDateFormat(MailSchedularConstants.SimpleDateReadFormat_value);
+					SimpleDateFormat formatter1 = new SimpleDateFormat(
+							MailSchedularConstants.SimpleDateReadFormat_value);
 					Date date = formatter1.parse(originalStringDate);
-					SimpleDateFormat formatter2 = new SimpleDateFormat(MailSchedularConstants.SimpleDateWriteFormat_value);
+					SimpleDateFormat formatter2 = new SimpleDateFormat(
+							MailSchedularConstants.SimpleDateWriteFormat_value);
 					String formatedTodayDate = formatter2.format(today);
 					logger.info("local date {}", formatedTodayDate);
 
 					String formatedDob = formatter2.format(date);
 					logger.info("custom formated originaldate date {}", formatedDob);
 
-					if (Objects.nonNull(formatedDob) && Objects.nonNull(formatedTodayDate) && (formatedTodayDate).equals(formatedDob)) {
+					if (Objects.nonNull(formatedDob) && Objects.nonNull(formatedTodayDate)
+							&& (formatedTodayDate).equals(formatedDob)) {
 						extractedAndEmailSending(subscriber, formatedTodayDate, formatedDob);
 						flag = true;
 					}
@@ -151,37 +156,40 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 
 				if (Objects.nonNull(context1)) {
 					String content = templateEngine.process("birthdayMailTemplate", context1);
-					MimeMessagePreparator messagePreparator = mimeMessage -> {
 
-						String mailId = subscriber.getEmailId();
-						if (Objects.nonNull(mailId)) {
-							if (mailId.contains(MailSchedularConstants.Gmail_value_placer)) {
-								mailId = mailId.replace(MailSchedularConstants.Gmail_value_placer, MailSchedularConstants.Gmail_value_Replacer);
+					mailId = subscriber.getEmailId();
+					logger.info("subscriber mailID {} ", mailId);
+					if (Objects.nonNull(mailId)) {
+						if (mailId.contains(MailSchedularConstants.Gmail_value_placer)) {
+							mailId = mailId.replace(MailSchedularConstants.Gmail_value_placer,MailSchedularConstants.Gmail_value_Replacer);
 
-								if (mailId.contains(MailSchedularConstants.Outlook_value_placer)) {
-									mailId = mailId.replace(MailSchedularConstants.Outlook_value_placer,MailSchedularConstants.Outlook_value_Replacer);
+							if (mailId.contains(MailSchedularConstants.Outlook_value_placer)) {
+								mailId = mailId.replace(MailSchedularConstants.Outlook_value_placer,MailSchedularConstants.Outlook_value_Replacer);
 
-									if (mailId.contains(MailSchedularConstants.Yahoo_value_placer)) {
-										mailId = mailId.replace(MailSchedularConstants.Yahoo_value_placer, MailSchedularConstants.Yahoo_value_Replacer);
-
-										MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-										messageHelper.setFrom(mailFrom);
-										messageHelper.setCc(ccmailID);
-										messageHelper.setTo(mailId); 
-										messageHelper.setSubject(bdayMailSubject);
-										messageHelper.setText(content, true);
-
-									}
+								if (mailId.contains(MailSchedularConstants.Yahoo_value_placer)) {
+									mailId = mailId.replace(MailSchedularConstants.Yahoo_value_placer,MailSchedularConstants.Yahoo_value_Replacer);
 								}
 							}
 						}
 
-						else {
-							logger.debug("subscriber mail is empty {}", subscriber.getFullName());
-						}
-					};
-					emailService.validateAndSendMailByMailId(messagePreparator);
+						  MimeMessagePreparator messagePreparator = mimeMessage -> {
+
+							MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+							messageHelper.setFrom(mailFrom);
+							messageHelper.setCc(ccmailID);
+							messageHelper.setTo(mailId);
+							messageHelper.setSubject(bdayMailSubject);
+							messageHelper.setText(content, true);
+
+						};
+
+						if (Objects.nonNull(messagePreparator))
+							emailService.validateAndSendMailByMailId(messagePreparator);
+					} else {
+						logger.debug("subscriber mail is empty {}", subscriber.getFullName());
+					}
 				}
+
 			}
 		} else {
 			logger.debug("got null object in extractedAndEmailSending");
@@ -220,8 +228,10 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 							dobCell.setCellType(CellType.NUMERIC);
 
 							if (Objects.nonNull(nameCell) && Objects.nonNull(emailCell) && Objects.nonNull(dobCell)) {
-								subscribersList.add(new Subscriber(nameCell.getStringCellValue(),emailCell.getStringCellValue(), dobCell.getNumericCellValue()));
-								logger.info("No: {} Value: {} Data Is Read and Stored in List", (++i),nameCell.getStringCellValue());
+								subscribersList.add(new Subscriber(nameCell.getStringCellValue(),
+										emailCell.getStringCellValue(), dobCell.getNumericCellValue()));
+								logger.info("No: {} Value: {} Data Is Read and Stored in List", (++i),
+										nameCell.getStringCellValue());
 							} else {
 								logger.debug("excel data is null in getListOfSubscribersFromExcel");
 							}
