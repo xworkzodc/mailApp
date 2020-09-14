@@ -69,7 +69,6 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 		logger.info("Invoked birthadyMailSender in service");
 
 		try {
-			@SuppressWarnings("unused")
 			boolean flag = false;
 			Date today = new Date();
 			List<Subscriber> subcriberList = getListOfSubscribersFromExcel();
@@ -95,19 +94,21 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 					String formatedDob = formatter2.format(date);
 					logger.info("custom formated originaldate date {}", formatedDob);
 
-					if (Objects.nonNull(formatedDob) && Objects.nonNull(formatedTodayDate)
-							&& (formatedTodayDate).equals(formatedDob)) {
-						extractedAndEmailSending(subscriber, formatedTodayDate, formatedDob);
+					 if(Objects.nonNull(formatedDob) && Objects.nonNull(formatedTodayDate)) {
+					if ((formatedTodayDate).equals(formatedDob)) {
 						flag = true;
+						extractedAndEmailSending(subscriber, formatedTodayDate, formatedDob);
+						
 					}
+				}
 
 				}
-				if (flag = false) {
-					logger.debug("No birthday found for today's date {}", today);
+				if (flag == false) {
+					logger.info("No birthday found for today's date {}", today);
 				}
 
 			} else {
-				logger.debug("subcriberList from getListOfSubscribersFromExcel Is null");
+				logger.info("subcriberList from getListOfSubscribersFromExcel Is null");
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -118,19 +119,22 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 
 	private String validateDOBLength(Integer originaldate, String originalStringDate) {
 		Integer length = originalStringDate.length();
-		if (Objects.nonNull(length) && Objects.nonNull(originaldate) && length.equals(7)) {
+		 if(Objects.nonNull(length) && Objects.nonNull(originaldate) ) {
+		 if (length.equals(7)) {
 			DecimalFormat decimalFormat = new DecimalFormat(MailSchedularConstants.DecimalFormat_value);
 			String converted = decimalFormat.format(originaldate);
 			originalStringDate = converted;
 			logger.info("updated value= {}", originalStringDate);
-		} else {
-			logger.debug("originalStringDate length Is null");
+		  }
+		 }else {
+			logger.info("originalStringDate length Is null");
 		}
 		return originalStringDate;
 	}
 
+	int j = 0;
 	private void extractedAndEmailSending(Subscriber subscriber, String formatedTodayDate, String formatedDob) {
-		logger.info("subscriber = {} Macthed DOB = {}", subscriber.getFullName(),
+		logger.info("no= {} subscriber = {} Macthed DOB = {}",(++j),subscriber.getFullName(),
 				(formatedTodayDate).equals(formatedDob));
 
 		if (Objects.nonNull(subscriber) && Objects.nonNull(formatedTodayDate) && Objects.nonNull(formatedDob)) {
@@ -186,13 +190,13 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 						if (Objects.nonNull(messagePreparator))
 							emailService.validateAndSendMailByMailId(messagePreparator);
 					} else {
-						logger.debug("subscriber mail is empty {}", subscriber.getFullName());
+						logger.info("subscriber mail is empty {}", subscriber.getFullName());
 					}
 				}
 
 			}
 		} else {
-			logger.debug("got null object in extractedAndEmailSending");
+			logger.info("got null object in extractedAndEmailSending");
 		}
 	}
 
@@ -233,14 +237,14 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 								logger.info("No: {} Value: {} Data Is Read and Stored in List", (++i),
 										nameCell.getStringCellValue());
 							} else {
-								logger.debug("excel data is null in getListOfSubscribersFromExcel");
+								logger.info("excel data is null in getListOfSubscribersFromExcel");
 							}
 						}
 						subscribersList.remove(0);
 					}
 				}
 			} else {
-				logger.debug("responseEntity null in getListOfSubscribersFromExcel");
+				logger.info("responseEntity null in getListOfSubscribersFromExcel");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
