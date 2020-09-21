@@ -33,7 +33,7 @@
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
     <property name="prefix" value="classpath:/templates/" />
     <property name="suffix" value=".html" />
-    <property name="templateMode" value="HTML5" />
+    <property name="templateMode" value="HTML"/>
 </bean>
 
 <bean id="templateEngine"

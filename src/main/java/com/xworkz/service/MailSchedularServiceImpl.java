@@ -12,10 +12,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -69,17 +69,17 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 		logger.info("Invoked birthadyMailSender in service");
 
 		try {
+			int totalMailsent = 0;
 			boolean flag = false;
 			Date today = new Date();
 			List<Subscriber> subcriberList = getListOfSubscribersFromExcel();
 
 			if (Objects.nonNull(subcriberList)) {
 				for (Subscriber subscriber : subcriberList) {
-					logger.info("subsribers=", subscriber.toString());
 					Integer originaldate = (int) ((subscriber.getDob())
 							- MailSchedularConstants.ExcelCell_Dycription_value);
 					String originalStringDate = originaldate.toString();
-					logger.info("originaldate {}", originalStringDate);
+					//logger.info("originaldate {}", originalStringDate);
 
 					originalStringDate = validateDOBLength(originaldate, originalStringDate);
 
@@ -89,22 +89,24 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 					SimpleDateFormat formatter2 = new SimpleDateFormat(
 							MailSchedularConstants.SimpleDateWriteFormat_value);
 					String formatedTodayDate = formatter2.format(today);
-					logger.info("local date {}", formatedTodayDate);
+					//logger.info("local date {}", formatedTodayDate);
 
 					String formatedDob = formatter2.format(date);
-					logger.info("custom formated originaldate date {}", formatedDob);
+					//logger.info("custom formated originaldate date {}", formatedDob);
 
 					 if(Objects.nonNull(formatedDob) && Objects.nonNull(formatedTodayDate)) {
 					if ((formatedTodayDate).equals(formatedDob)) {
 						flag = true;
-						extractedAndEmailSending(subscriber, formatedTodayDate, formatedDob);
-						
+						totalMailsent = extractedAndEmailSending(subscriber, formatedTodayDate, formatedDob);	
 					}
 				}
 
 				}
 				if (flag == false) {
 					logger.info("No birthday found for today's date {}", today);
+				}
+				else {
+					  logger.info("Total birthday mails sent {}", totalMailsent);
 				}
 
 			} else {
@@ -124,7 +126,8 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 			DecimalFormat decimalFormat = new DecimalFormat(MailSchedularConstants.DecimalFormat_value);
 			String converted = decimalFormat.format(originaldate);
 			originalStringDate = converted;
-			logger.info("updated value= {}", originalStringDate);
+			//logger.info("originaldate value={}", originaldate);
+			//logger.info("updated value= {}", originalStringDate);
 		  }
 		 }else {
 			logger.info("originalStringDate length Is null");
@@ -132,12 +135,11 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 		return originalStringDate;
 	}
 
-	int j = 0;
-	private void extractedAndEmailSending(Subscriber subscriber, String formatedTodayDate, String formatedDob) {
-		logger.info("no= {} subscriber = {} Macthed DOB = {}",(++j),subscriber.getFullName(),
-				(formatedTodayDate).equals(formatedDob));
+	public int j = 0;
+	private int extractedAndEmailSending(Subscriber subscriber, String formatedTodayDate, String formatedDob) {
 
 		if (Objects.nonNull(subscriber) && Objects.nonNull(formatedTodayDate) && Objects.nonNull(formatedDob)) {
+            logger.info("no= {} subscriber = {} Macthed DOB = {}",(++j),subscriber.getFullName(),(formatedTodayDate).equals(formatedDob));
 			RestTemplate restTemplate = new RestTemplate();
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
@@ -152,7 +154,7 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 				Random random = new Random();
 				Integer randomInt = random.nextInt(arrayList.length());
 				Object imageLink = arrayList.get(randomInt);
-				logger.info("birthday image link= {}", imageLink);
+				//logger.info("birthday image link= {}", imageLink);
 
 				Context context1 = new Context();
 				context1.setVariable("subcriberName", subscriber.getFullName());
@@ -198,9 +200,10 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 		} else {
 			logger.info("got null object in extractedAndEmailSending");
 		}
+		return j;
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unused" })
 	public List<Subscriber> getListOfSubscribersFromExcel() throws IOException {
 		List<Subscriber> subscribersList = new ArrayList<Subscriber>();
 		Workbook workbook = null;
@@ -218,28 +221,41 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 				if (Objects.nonNull(inputStream)) {
 					workbook = new XSSFWorkbook(inputStream);
 					Sheet excelSheet = workbook.getSheetAt(0);
-					logger.info("Last Row Number of Is Excel file {} ", excelSheet.getLastRowNum());
+					logger.info("Last Row Number of Is Excel file {} ", excelSheet.getPhysicalNumberOfRows());
 					logger.info("Excel file Is opened");
 
 					if (Objects.nonNull(excelSheet)) {
 						for (Row row : excelSheet) { // For each Row.
-
+                            
+							if(row !=null) {
+								
 							Cell nameCell = row.getCell(ExcelFileColumn.ExcelFile_NAME_CELL);
 							nameCell.setCellType(CellType.STRING);
+							nameCell=row.getCell(ExcelFileColumn.ExcelFile_NAME_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
+							
 							Cell emailCell = row.getCell(ExcelFileColumn.ExcelFile_EMAIL_CELL);
 							emailCell.setCellType(CellType.STRING);
+							emailCell=row.getCell(ExcelFileColumn.ExcelFile_EMAIL_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
+							
 							Cell dobCell = row.getCell(ExcelFileColumn.ExcelFile_DOB_CELL);
 							dobCell.setCellType(CellType.NUMERIC);
-
-							if (Objects.nonNull(nameCell) && Objects.nonNull(emailCell) && Objects.nonNull(dobCell)) {
-								subscribersList.add(new Subscriber(nameCell.getStringCellValue(),
-										emailCell.getStringCellValue(), dobCell.getNumericCellValue()));
-								logger.info("No: {} Value: {} Data Is Read and Stored in List", (++i),
-										nameCell.getStringCellValue());
-							} else {
-								logger.info("excel data is null in getListOfSubscribersFromExcel");
+							dobCell=row.getCell(ExcelFileColumn.ExcelFile_DOB_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
+							
+							if(nameCell !=null || emailCell !=null || dobCell !=null){
+							subscribersList.add(new Subscriber(nameCell.getStringCellValue(),emailCell.getStringCellValue(), dobCell.getNumericCellValue()));
+							//logger.info("No: {} Value: {} Data Is Read and Stored in List", (++i),nameCell.getStringCellValue());
+                            ++i;
+							}
+							else {
+							logger.info("Cell Data is empty in getListOfSubscribersFromExcel in Row:{}", (++i));
+							}
+							
+							}
+							else {
+							logger.info("Row: {} Data is empty in getListOfSubscribersFromExcel", (++i));
 							}
 						}
+						logger.info("Total: {} Data Is Read and Stored in List", i);
 						subscribersList.remove(0);
 					}
 				}

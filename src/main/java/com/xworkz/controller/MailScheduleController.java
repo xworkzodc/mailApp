@@ -20,15 +20,15 @@ public class MailScheduleController {
 	private MailSchedularService mailSchedular;
 
 	@RequestMapping(value = "/mailSchedule.do", method = RequestMethod.GET)
-	public String sendScheduleMail() {
+	public void sendScheduleMail() {
 		logger.info("invoked sendScheduleMail() in controller");
 		try {
 			mailSchedular.birthadyMailSender();
+            logger.info("Birthady Mails Task Exccution Done");
 		} catch (URISyntaxException | IOException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);
 		}
-		return "Job executed";
 	}	
 	
 	

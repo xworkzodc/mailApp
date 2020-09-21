@@ -17,7 +17,7 @@ public class Subscriber implements Serializable {
 	private double dob;
 
 	public Subscriber() {
-		
+
 	}
 
 	public Subscriber(String fullName, String email, double date) {

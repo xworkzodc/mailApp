@@ -470,7 +470,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</tr>
 									<tr>
 										<td><h5>
-												Text<sup>*</sup>:
+												Message<sup>*</sup>:
 											</h5></td>
 										<td><textarea rows="4" cols="30" class="form-control"
 												id="txtMsg" name="msg"></textarea>
@@ -486,7 +486,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<tr>
 										<td colspan="2" align="center"><input
 											class="col-sm-5 btn btn-light" type="submit"
-											value="Send Mail"></td>
+											value="Send SMS"></td>
 									</tr>
 
 								</table>
