@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.xworkz</groupId>
-	<artifactId>bulk-mail-app-v2</artifactId>
+	<artifactId>bulk-mail-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -335,7 +335,7 @@
 					<artifactId>appengine-maven-plugin</artifactId>
 					<version>${appengine-maven-plugin-version}</version>
 					<configuration>
-						<deploy.projectId>bulk-mail-app-v2</deploy.projectId>
+						<deploy.projectId>bulk-mail-app</deploy.projectId>
 						<deploy.version>v01</deploy.version>
 						<stage.enableJarSplitting>true</stage.enableJarSplitting>
 						<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
