@@ -4,9 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,21 +86,21 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 
 					originalStringDate = validateDOBLength(originaldate, originalStringDate);
 
-					SimpleDateFormat formatter1 = new SimpleDateFormat(
-							MailSchedularConstants.SimpleDateReadFormat_value);
+					SimpleDateFormat formatter1 = new SimpleDateFormat(MailSchedularConstants.SimpleDateReadFormat_value);
 					Date date = formatter1.parse(originalStringDate);
-					SimpleDateFormat formatter2 = new SimpleDateFormat(
-							MailSchedularConstants.SimpleDateWriteFormat_value);
+					SimpleDateFormat formatter2 = new SimpleDateFormat(MailSchedularConstants.SimpleDateWriteFormat_value);
 					String formatedTodayDate = formatter2.format(today);
 					//logger.info("local date {}", formatedTodayDate);
 
 					String formatedDob = formatter2.format(date);
+					
+					LocalDate dob = new java.sql.Date(date.getTime()).toLocalDate();
 					//logger.info("custom formated originaldate date {}", formatedDob);
 
 					 if(Objects.nonNull(formatedDob) && Objects.nonNull(formatedTodayDate)) {
 					if ((formatedTodayDate).equals(formatedDob)) {
 						flag = true;
-						totalMailsent = extractedAndEmailSending(subscriber, formatedTodayDate, formatedDob);	
+						totalMailsent = extractedAndEmailSending(subscriber, formatedTodayDate, formatedDob ,dob);	
 					}
 				}
 
@@ -119,6 +122,8 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 
 	}
 
+	
+
 	private String validateDOBLength(Integer originaldate, String originalStringDate) {
 		Integer length = originalStringDate.length();
 		 if(Objects.nonNull(length) && Objects.nonNull(originaldate) ) {
@@ -134,10 +139,11 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 		}
 		return originalStringDate;
 	}
+	
+	
 
 	public int j = 0;
-	private int extractedAndEmailSending(Subscriber subscriber, String formatedTodayDate, String formatedDob) {
-
+	private int extractedAndEmailSending(Subscriber subscriber, String formatedTodayDate, String formatedDob, LocalDate date) {
 		if (Objects.nonNull(subscriber) && Objects.nonNull(formatedTodayDate) && Objects.nonNull(formatedDob)) {
             logger.info("no= {} subscriber = {} Macthed DOB = {}",(++j),subscriber.getFullName(),(formatedTodayDate).equals(formatedDob));
 			RestTemplate restTemplate = new RestTemplate();
@@ -155,10 +161,14 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 				Integer randomInt = random.nextInt(arrayList.length());
 				Object imageLink = arrayList.get(randomInt);
 				//logger.info("birthday image link= {}", imageLink);
-
+				int age = getTheCurrentAge(date);
+                
 				Context context1 = new Context();
 				context1.setVariable("subcriberName", subscriber.getFullName());
 				context1.setVariable("imageLink", imageLink);
+				context1.setVariable("dob", date);
+				context1.setVariable("agePast", age-1);
+				context1.setVariable("agePresent", age);
 
 				if (Objects.nonNull(context1)) {
 					String content = templateEngine.process("birthdayMailTemplate", context1);
@@ -202,8 +212,15 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 		}
 		return j;
 	}
+	
+	
+	private int getTheCurrentAge(LocalDate givenDate){
+		Period period = Period.between(givenDate, LocalDate.now());
+		int age=period.getYears();
+		return age;
+	}
 
-	@SuppressWarnings({ "deprecation", "unused" })
+
 	public List<Subscriber> getListOfSubscribersFromExcel() throws IOException {
 		List<Subscriber> subscribersList = new ArrayList<Subscriber>();
 		Workbook workbook = null;
