@@ -13,23 +13,26 @@
 <body>
 	<p>
 	<h3>
-		<b> Wish you many more Happy returns of the day <div class="row" th:text="${subcriberName}"></div> </b>
+	<b> Wish you many more happy returns of the day <div class="row" th:text="${subcriberName}"></div> </b>
 	</h3>
 	</p>
+	<p>      
+	<h4><br/>From <span th:text="${dob}" th:remove="tag"></span> you have led <span th:text="${agePast}" th:remove="tag"></span> sensational years. Make this <span th:text="${agePresent}"></span> and <br></br>
+	your birthday a super sensational.</h4>
+	</p>
+	
 	
 	<div id="wishesImage">
-		<img th:src="@{${imageLink}}" style="width: 541px; height: 382px"/>
+	<img th:src="@{${imageLink}}" style="width: 541px; height: 382px"/>
 	</div>
 
 
 	<div style="margin-top: 3%;margin-bottom: 4%;">
-		<h5>Please scrolldown</h5>
+	<h5>Please scrolldown</h5>
 	</div>
 
-    <p style="margin-left: 1%; margin-top: 4%">
-		<img
-			src="https://raw.githubusercontent.com/xworkzodc/newsfeed/master/logo.jpg"
-			width="30%">
+        <p style="margin-left: 1%; margin-top: 4%">
+	<img src="https://raw.githubusercontent.com/xworkzodc/newsfeed/master/logo.jpg" width="30%">
 	</p>
 
 	<p style="color: #e36c0a">
