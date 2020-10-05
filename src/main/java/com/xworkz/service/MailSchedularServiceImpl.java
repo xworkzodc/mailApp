@@ -4,13 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -63,7 +63,9 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 	@Value("${imagesJsonlink}")
 	private String imagesJsonlink;
 	@Value("${ccmailID}")
-	private String ccmailID;
+	private String[] ccmailID;
+	@Value("${bdayMailreportSubject}")
+	private String reportSubject;
 	private String mailId;
 	@Autowired
 	private EncryptionHelper encryptionHelper;
@@ -106,10 +108,15 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 
 				}
 				if (flag == false) {
+					String massage = "No birthday found for today's date";
 					logger.info("No birthday found for today's date {}", today);
-				}
+					sendReportMail(massage, today);
+					logger.info("Report Mail sent");
+				}		
 				else {
+					  String massage = "Total birthday mails sent";
 					  logger.info("Total birthday mails sent {}", totalMailsent);
+					  //sendReportMail(massage, totalMailsent);
 				}
 
 			} else {
@@ -214,6 +221,36 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 	}
 	
 	
+	private void sendReportMail(String message, Object object) {
+		try {
+			Context context = new Context();
+			context.setVariable("reportMasseage", message);
+			context.setVariable("reportTotal", object);
+			
+			if (Objects.nonNull(context)) {
+				String content = templateEngine.process("dailyMailReport", context);
+				MimeMessagePreparator messagePreparator = mimeMessage -> {
+
+					MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+					messageHelper.setFrom(mailFrom);
+					messageHelper.setCc(ccmailID);
+					messageHelper.setTo(mailFrom);
+					messageHelper.setSubject(reportSubject);
+					messageHelper.setText(content, true);
+
+				};
+
+				if (Objects.nonNull(messagePreparator)) 
+					emailService.validateAndSendMailByMailId(messagePreparator);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Error is {} and Message is {}", e, e.getMessage());
+		}
+		
+		
+	}
+	
 	private int getTheCurrentAge(LocalDate givenDate){
 		Period period = Period.between(givenDate, LocalDate.now());
 		int age=period.getYears();
@@ -293,7 +330,6 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 		}
 
 		return subscribersList;
-
 	}
 
 }
