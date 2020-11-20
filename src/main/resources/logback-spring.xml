@@ -17,7 +17,6 @@
 		</filter>
 	</appender>
 
-
 	<appender name="FILE-ENGINE"
 		class="ch.qos.logback.core.FileAppender">
 		<file>${USER_HOME}/log/emailLogfile${bySecond}.log</file>

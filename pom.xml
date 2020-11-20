@@ -227,6 +227,11 @@
 			<version>${shared-configuration.version}</version>
 			<type>pom</type>
 		</dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-logging-logback</artifactId>
+			<version>0.118.1-alpha</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-maven-plugin -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
@@ -251,17 +256,29 @@
 					<groupId>com.fasterxml.jackson.core</groupId>
 					<artifactId>jackson-annotations</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-nop</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 			<version>${fasterxml.jackson.core.version}</version>
+			<exclusions>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>${fasterxml.jackson.annotations.version}</version>
+			<exclusions>
+			<exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            </exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
@@ -318,7 +335,7 @@
 					<artifactId>appengine-maven-plugin</artifactId>
 					<version>${appengine-maven-plugin-version}</version>
 					<configuration>
-						<deploy.projectId>xworkz-mail-app</deploy.projectId>
+						<deploy.projectId>bulk-mail-app</deploy.projectId>
 						<deploy.version>v01</deploy.version>
 						<stage.enableJarSplitting>true</stage.enableJarSplitting>
 						<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>

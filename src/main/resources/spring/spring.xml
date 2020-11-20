@@ -33,7 +33,7 @@
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
     <property name="prefix" value="classpath:/templates/" />
     <property name="suffix" value=".html" />
-    <property name="templateMode" value="HTML5" />
+    <property name="templateMode" value="HTML"/>
 </bean>
 
 <bean id="templateEngine"
@@ -42,25 +42,4 @@
   <property name="enableSpringELCompiler" value="true" />
 </bean>
 
-	<bean id="mailSender"
-		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="xworkzdev@gmail.com" />
-		<property name="password" value="Think@Pad_Xworkz789" />
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.transport.protocol">smtp</prop>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.debug">true</prop>
-			</props>
-		</property>
-	</bean>
-	
-    <task:scheduled-tasks scheduler="myScheduler">
-		<task:scheduled ref="emailService" method="birthadyMailSender" cron="0 0 8 * * ?" />
-	</task:scheduled-tasks>
-
-	<task:scheduler id="myScheduler" pool-size="10" />
 </beans>
