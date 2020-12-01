@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+ <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+	<p>
+	<h3>
+		<b> Wish you many more happy returns of the day <div class="row" th:text="${subcriberName}"></div> </b>
+	</h3>
+	</p>
+	<p>      
+	<h4><br/>From <span th:text="${dob}" th:remove="tag"></span> you have led <span th:text="${agePast}" th:remove="tag"></span> sensational years. Make this <span th:text="${agePresent}"></span> and <br></br>
+	your birthday a super sensational.</h4>
+	</p>
+	
+	
+	<div id="wishesImage">
+		<img th:src="@{${imageLink}}" style="width: 541px; height: 382px"/>
+	</div>
+
+
+	<div style="margin-top: 3%;margin-bottom: 4%;">
+		<h5>Please scrolldown</h5>
+	</div>
+
+    <p style="margin-left: 1%; margin-top: 4%">
+		<img
+			src="https://raw.githubusercontent.com/xworkzodc/newsfeed/master/logo.jpg"
+			width="30%">
+	</p>
+
+	<p style="color: #e36c0a">
+		 <b>Website : <a href="http://www.x-workz.in">http://www.x-workz.in</a></b>
+	</p>
+	<p style="color: #e36c0a;">
+		<b>Contact Us:</b> +91-9886971480/9886971483
+	</p>
+
+    <p style="color: #e36c0a; margin-right: 1%; margin-top: 2%">
+		<b>Our Google Review :<a
+			href="https://rb.gy/5zfodu">Reviews
+		</a></b>
+
+
+	<p style="color: #e36c0a; margin-right: 1%; margin-top: 2%">
+		<b>Find us on google maps: <a
+			href="https://goo.gl/maps/AjakEGFkN192">https://goo.gl/maps/AjakEGFkN192
+		</a></b>
+	</p>
+
+
+</body>
+</html>
