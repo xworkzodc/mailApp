@@ -79,21 +79,6 @@ public class EncryptionHelper {
 		}
 		return null;
 
-	}
-
-	
-	
-	
-	  public static void main(String[] args) {
-	  
-	  EncryptionHelper en =new EncryptionHelper(); String stEn=
-	  en.encrypt("Basic 0da0d39d283f2a0d7113fadcd96e873e-us20");
-	  System.out.println("encrypted key= "+stEn);
-	  
-	  String stDC= en.decrypt(stEn);
-	  System.out.println("decrypt key= "+stDC);
-	  }
-	 
-	 
+	}	 
 	 
 }
