@@ -59,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<!-- <li class="nav-item"><a class="nav-link" href="#"
 								onclick="clickFunc('mailValidator')">Mail Validator</a></li> -->
 						<li class="nav-item"><a class="nav-link" href="#"
-							onclick="clickFunc('sendBulkSMS')">Send SMS</a></li>
+							onclick="clickFunc('sendSMS')">Send SMS</a></li>
 					</ul>
 					<!-- <form class="form-inline my-2 my-md-0">
 							<input class="form-control" type="text" placeholder="Search">
@@ -68,32 +68,53 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</nav>
 			</div>
 
-
 			<div class="container" align="center">
-
 				<div class="row"
 					style="color: white; text-align: center; margin-top: 3%">
 					<div class="col-md-3"></div>
 					<div class="col-md-6">
-						 <h3 style="color: red;">
-							<b>${msg}</b>
-							<b>${loginsuccess}</b>
-							<b>${loginfaildbypasswod}</b>
+						<h3 style="color: red;">
+							<b>${msg}</b> <b>${loginsuccess}</b> <b>${loginfaildbypasswod}</b>
 						</h3>
 					</div>
 					<div class="col-md-3"></div>
 				</div>
 			</div>
-			<div class="container container_border ">
+									
+			<div class="container container_border ">	
+			    <div class="sendSMS">
+					<h2 align="center"
+						style="margin-top: 5%; color: white; padding-top: 3%">
+						Send SMS</h2>
+					<div class="panel panel-default">
+						<div class="panel-body" align="center" style="margin-top: 2%">
+							<div class="row mt-3 mb-3">
+								<div class="col-sm-4"></div>
+								<div class="col-sm-4" align="center">
+									<select class="custom-select custom-select-lg sm-3"
+										onchange="getSMSType()" id="smsOerations"
+										style="font-size: 20px; text-align: center;">
+										<option value="0">Select SMS Operation</option>
+										<option value="1">Bulk SMS</option>
+										<option value="2">Single SMS</option>
+										<option value="3">Delivery Report</option>
+										<option value="4">Check Balance</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
 				<div class="bulkMail">
 					<h2 align="center"
-						style="margin-top: 5%; color: white; padding-top: 3%">Bulk
+						style="margin-top: 5%; color: white; padding-top: 3%" >Bulk
 						Mails</h2>
 					<div class="panel panel-default">
 						<div class="panel-heading" align="center">
-							<h4 style="margin-top: 8%; color: white;">
-								<b>Mail Details</b><br><br>
-								<b>Select MailId To Check The Lists</b>
+							<h4 style="margin-top: 5%; color: white;">
+								<br> <br> <b>Select MailId To
+									Check The Lists</b>
 							</h4>
 						</div>
 						<div class="panel-body" align="center" style="margin-top: 2%">
@@ -129,8 +150,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 							</div>
 
-
-
 							<form class="newsFeed" action="newsfeed.do" method="post"
 								style="margin-top: 8%;">
 								<table class="col-md-6 table table-bordered table-dark"
@@ -142,15 +161,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											</h3></td>
 									</tr>
 									<tr>
-									<td style=""><h5>
+										<td style=""><h5>
 												Mail ID<sup>*</sup>:
 											</h5></td>
-									   <td>
-									    <select class="custom-select custom-select-lg sm-3" name="msgType">
-										<option  value="0">X-workz.in</option>
-										<option  value="1">Gmail.com</option>
-									</select>
-									  </td>
+										<td><select class="custom-select custom-select-lg sm-3"
+											name="msgType">
+												<option value="0">X-workz.in</option>
+												<option value="1">Gmail.com</option>
+										</select></td>
 									</tr>
 									<tr>
 										<td><h5>
@@ -202,22 +220,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</tr>
 									<tr>
 									<tr>
-									<td style=""><h5>
+										<td style=""><h5>
 												Mail ID<sup>*</sup>:
 											</h5></td>
-									   <td>
-									    <select class="custom-select custom-select-lg sm-3" name="msgType">
-										<option  value="0">X-workz.in</option>
-										<option  value="1">Gmail.com</option>
-									</select>
-									  </td>
+										<td><select class="custom-select custom-select-lg sm-3"
+											name="msgType">
+												<option value="0">X-workz.in</option>
+												<option value="1">Gmail.com</option>
+										</select></td>
 									</tr>
-										<td style=""><h5>
-												Subject Name<sup>*</sup>:
-											</h5></td>
-										<td><input type="text" class="form-control"
-											name="subName"><input type="hidden" name="fileName"
-											value="New_Joiners.html"></td>
+									<td style=""><h5>
+											Subject Name<sup>*</sup>:
+										</h5></td>
+									<td><input type="text" class="form-control" name="subName"><input
+										type="hidden" name="fileName" value="New_Joiners.html"></td>
 									</tr>
 									<tr>
 										<td style=""><h5>
@@ -253,15 +269,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<td colspan="2" align="center"><h3>Fees Payment</h3></td>
 									</tr>
 									<tr>
-									<td style=""><h5>
+										<td style=""><h5>
 												Mail ID<sup>*</sup>:
 											</h5></td>
-									   <td>
-									    <select class="custom-select custom-select-lg sm-3" name="msgType">
-										<option  value="0">X-workz.in</option>
-										<option  value="1">Gmail.com</option>
-									</select>
-									  </td>
+										<td><select class="custom-select custom-select-lg sm-3"
+											name="msgType">
+												<option value="0">X-workz.in</option>
+												<option value="1">Gmail.com</option>
+										</select></td>
 									</tr>
 									<tr>
 										<td style=""><h5>
@@ -316,15 +331,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<td colspan="2" align="center"><h3>Birthday Greeting</h3></td>
 									</tr>
 									<tr>
-									<td style=""><h5>
+										<td style=""><h5>
 												Mail ID<sup>*</sup>:
 											</h5></td>
-									   <td>
-									    <select class="custom-select custom-select-lg sm-3" name="msgType">
-										<option  value="0">X-workz.in</option>
-										<option  value="1">Gmail.com</option>
-									</select>
-									  </td>
+										<td><select class="custom-select custom-select-lg sm-3"
+											name="msgType">
+												<option value="0">X-workz.in</option>
+												<option value="1">Gmail.com</option>
+										</select></td>
 									</tr>
 									<tr>
 										<td style=""><h5>
@@ -375,15 +389,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<td colspan="2" align="center"><h3>Course Content</h3></td>
 									</tr>
 									<tr>
-									<td style=""><h5>
+										<td style=""><h5>
 												Mail ID<sup>*</sup>:
 											</h5></td>
-									   <td>
-									    <select class="custom-select custom-select-lg sm-3" name="msgType">
-										<option  value="0">X-workz.in</option>
-										<option  value="1">Gmail.com</option>
-									</select>
-									  </td>
+										<td><select class="custom-select custom-select-lg sm-3"
+											name="msgType">
+												<option value="0">X-workz.in</option>
+												<option value="1">Gmail.com</option>
+										</select></td>
 									</tr>
 									<tr>
 										<td style=""><h5>
@@ -432,6 +445,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</tr>
 									<tr>
 										<td style=""><h5>
+												Class Mode<sup>*</sup>:
+											</h5></td>
+										<td><input class="form-control" type="text"
+											name="classMode"></td>
+									</tr>
+									<tr>
+										<td style=""><h5>
 												Fee<sup>*</sup>:
 											</h5></td>
 										<td><input class="form-control" type="text" name="fees"></td>
@@ -447,16 +467,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 				</div>
+				
 				<div class="sendBulkSMS">
-					<h2 align="center"
-						style="margin-top: 5%; color: white; padding-top: 3%">Send
-						Sms</h2>
 					<div class="panel panel-default">
-						<div class="panel-heading" align="center">
-							<h4 style="margin-top: 8%; color: white;">
-								<b>Sms Details Details</b>
-							</h4>
-						</div>
 						<div class="panel-body" align="center" style="margin-top: 2%">
 							<form action="sendSMS.do" class="smsSender" method="post"
 								enctype="multipart/form-data">
@@ -465,12 +478,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									style="color: white">
 									<tr>
 										<td colspan="2" align="center"><h3>
-												<b>SMS Send</b>
+												<b>Send Bulk SMS</b>
 											</h3></td>
 									</tr>
 									<tr>
 										<td><h5>
-												Text<sup>*</sup>:
+												Enter Message<sup>*</sup>:
 											</h5></td>
 										<td><textarea rows="4" cols="30" class="form-control"
 												id="txtMsg" name="msg"></textarea>
@@ -478,15 +491,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</tr>
 									<tr>
 										<td>
-											<h5>File Upload:</h5>
+											<h5>Upload Excel File:</h5>
 										</td>
 										<td><input type="file" class="form-control"
 											name="uploadFile"></td>
 									</tr>
 									<tr>
 										<td colspan="2" align="center"><input
-											class="col-sm-5 btn btn-light" type="submit"
-											value="Send Mail"></td>
+											class="col-sm-5 btn btn-light" type="submit" value="Send SMS"></td>
 									</tr>
 
 								</table>
@@ -494,50 +506,147 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<!-- The Modal -->
-			<div class="modal" id="listModal">
-				<div class="modal-dialog modal-lg">
-					<div class="modal-content">
-
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<h4 class="modal-title">MailChimp List</h4>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-
-						<!-- Modal body -->
-						<div class="modal-body">
-							<table class="table table-striped">
-								<thead>
+				
+				<div class="sendSingleSMS">
+					<div class="panel panel-default">
+						<div class="panel-body" align="center" style="margin-top: 2%">
+							<form action="sendSingleSMS.do" class="smsSender" method="post"
+								enctype="multipart/form-data">
+								<table class="col-md-6 table table-bordered table-dark"
+									border="1" border-color="white" align="center"
+									style="color: white">
 									<tr>
-										<th scope="col">#</th>
-										<th scope="col-2">List Name</th>
-										<th scope="col">Total Subscriber</th>
-										<th scope="col">Description</th>
+										<td colspan="2" align="center"><h3>
+												<b>Send Single SMS</b>
+											</h3></td>
 									</tr>
-								</thead>
-								<tbody class="listBody">
-
-								</tbody>
-							</table>
+									<tr>
+										<td>
+											<h5>Enter Mobile Number<sup>*</sup>:</h5>
+										</td>
+										<td><input type="text" class="form-control"
+											name="mobile"></td>
+									</tr>
+									<tr>
+										<td><h5>
+												Enter Message<sup>*</sup>:
+											</h5></td>
+										<td><textarea rows="4" cols="30" class="form-control"
+												id="txtMsg" name="message"></textarea>
+											<h6 id="count_message"></h6></td>
+									</tr>
+									
+									<tr>
+										<td colspan="2" align="center"><input
+											class="col-sm-5 btn btn-light" type="submit" value="Send SMS"></td>
+									</tr>
+								</table>
+							</form>
 						</div>
+					</div>
+				</div>
+				
+				
+				<div class="reports">
+					<div class="panel panel-default">
+						<div class="panel-body" align="center" style="margin-top: 2%">
+							<form action="reports.do" class="smsSender" method="post"
+								enctype="multipart/form-data">
+								<table class="col-md-6 table table-bordered table-dark"
+									border="1" border-color="white" align="center"
+									style="color: white">
+									<tr>
+										<td colspan="2" align="center"><h3>
+												<b>Check SMS Report</b>
+											</h3></td>
+									</tr>
+									<tr>
+										<td>
+											<h5>Enter Message Id<sup>*</sup>:</h5>
+										</td>
+										<td><input type="text" class="form-control"
+											name="messageId"></td>
+									</tr>
+									
+									<tr>
+										<td colspan="2" align="center"><input
+											class="col-sm-5 btn btn-light" type="submit" value="Get Report"></td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				<div class="checkSMSBalance">
+					<div class="panel panel-default">
+						<div class="panel-body" align="center" style="margin-top: 2%">
+							<form action="checkSMSBalance.do" class="smsSender" method="post"
+								enctype="multipart/form-data">
+								<table class="col-md-6 table table-bordered table-dark"
+									border="1" border-color="white" align="center"
+									style="color: white">
+									<tr>
+										<td colspan="2" align="center">
+										   <h3>
+											<b>Check SMS Balance</b>
+										  </h3>
+										</td>
+									 </tr>
+									 <tr>
+										<td colspan="2" align="center"><input
+										class="col-sm-5 btn btn-light" type="submit" value="Check Balance"></td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>			
 
-						<!-- Modal footer -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				<!-- The Modal -->
+				<div class="modal" id="listModal">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">MailChimp List</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col-2">List Name</th>
+											<th scope="col">Total Subscriber</th>
+											<th scope="col">Description</th>
+										</tr>
+									</thead>
+									<tbody class="listBody">
+
+									</tbody>
+								</table>
+							</div>
+
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Close</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script type="text/javascript"
-			src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="./js/index.js"></script>
-	</div>
+			<script
+				src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script type="text/javascript"
+				src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+			<script type="text/javascript" src="./js/index.js"></script>
+		</div>
 </body>
 </html>

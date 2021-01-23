@@ -81,9 +81,25 @@ public class EncryptionHelper {
 
 	}
 
-	/*
-	 * public static void main(String[] args) { EncryptionHelper en =new
-	 * EncryptionHelper(); String st= en.encrypt("0N7DCNT1L6HNNXRU");
-	 * System.out.println(st); }
-	 */
+	
+	
+	
+	  public static void main(String[] args) {
+	  
+	  EncryptionHelper en =new EncryptionHelper();
+//	  String stEn= en.encrypt("xworkzdev@gmail.com");
+//	  System.out.println("Email encrypted key= "+stEn);
+//	  
+//	  String stDC= en.decrypt(stEn);
+//	  System.out.println("Email decrypted key= "+stDC);
+	  
+	   String encPass = en.encrypt("xworkzodc");
+	  System.out.println("encrypted key= "+encPass);
+	  
+	  String decPass= en.decrypt("SL+xd2DS2FEsed/8nyHejg==");
+	  System.out.println("decrypted key= "+decPass);
+	  }
+	 
+	 
+	 
 }

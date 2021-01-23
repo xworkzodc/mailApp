@@ -4,7 +4,11 @@
 $(document).ready(function () {
     allHide();
     $('.bulkMail').hide();
+	$('.sendSMS').hide();
 	$('.sendBulkSMS').hide();
+	$('.sendSingleSMS').hide();
+	$('.reports').hide();
+	$('.checkSMSBalance').hide();
 });
 
 let getDropdown  = () => fetch('https://raw.githubusercontent.com/xworkzodc/newsfeed/master/mailSender.json').then(data => data.json());
@@ -63,6 +67,30 @@ function getMessageType() {
     }
 }
 
+
+function getSMSType() {
+	
+    if ($('#smsOerations').val() == '0') {
+        allHide();
+    }
+    if ($('#smsOerations').val() == '1') {
+        allHide();
+        $('.sendBulkSMS').show();
+    }
+    if ($('#smsOerations').val() == '2') {
+        allHide();
+        $('.sendSingleSMS').show();
+    }
+    if ($('#smsOerations').val() == '3') {
+        allHide();
+        $('.reports').show();
+    }
+    if ($('#smsOerations').val() == '4') {
+        allHide();
+        $('.checkSMSBalance').show();
+    }
+}
+
 function getListDetails() {
     $.ajax({
         type: "get",
@@ -87,11 +115,14 @@ function getListDetails() {
 
 function allHide() {
     $('.newsFeed').hide();
-    $('.newJoiner').hide();
+    $('.newJoiner').hide(); 
     $('.feesPayment').hide();
     $('.birthday').hide();
     $('.courseContent').hide();
-    
+    $('.sendBulkSMS').hide();
+	$('.sendSingleSMS').hide();
+	$('.reports').hide();
+	$('.checkSMSBalance').hide();
 }
 
 
@@ -255,6 +286,7 @@ $(".courseContent").ready(function () {
 
 function hideMainTab(){
 	$('.bulkMail').hide();
+	$('.sendSMS').hide();
 	$('.sendBulkSMS').hide();
 }
 

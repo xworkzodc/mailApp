@@ -1,7 +1,10 @@
 package com.xworkz.controller;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,21 +41,91 @@ public class MailController {
 	}
 
 	@RequestMapping(value = "/sendSMS.do", method = RequestMethod.POST)
-	public ModelAndView sendSMS(@RequestParam("uploadFile") MultipartFile file, @RequestParam("msg") String msg) {
+	public ModelAndView senBulkSMS(@RequestParam("uploadFile") MultipartFile file, @RequestParam("msg") String msg) {
 		logger.info("is called....");
 
 		ModelAndView modelAndView = new ModelAndView("index");
 		if (!file.isEmpty()) {
 			logger.debug("contant type {}", file.getContentType());
 			List<String> contactList = xworkzService.getContactListFromXls(file);
-			if (contactList != null) {
-				xworkzService.sendMSG(contactList, msg);
-			}
-			logger.info("Is file is Empty {}", contactList.isEmpty());
+			if (Objects.nonNull(contactList)) {
+				String response = xworkzService.sendBulkMSG(contactList, msg);
+				if (Objects.nonNull(response))
+				return modelAndView.addObject("msg", "Bulk SMS Sent Successfully");
+			 }
+			logger.info("Is file is Empty :{}", contactList.isEmpty());
 		} else {
 			modelAndView.addObject("msg", "File is not found.........");
 		}
-		return modelAndView.addObject("msg", "SMS Sended Successfully");
+		return modelAndView.addObject("msg", "Bulk SMS Sent Faild! Try Again.");
+		
+	}
+
+	@RequestMapping(value = "/sendSingleSMS.do", method = RequestMethod.POST)
+	public ModelAndView sendSingleSMS(@RequestParam("mobile") String mobileNumber,@RequestParam("message") String message) {
+		logger.info("sendSingleSMS() is called....");
+		ModelAndView modelAndView = new ModelAndView("index");
+		if (Objects.nonNull(mobileNumber) && Objects.nonNull(message)) {
+			logger.debug("The Mobile Number entered is {}", mobileNumber);
+			try {
+				String response = xworkzService.sendSingleSMS(mobileNumber, message);
+				    if (Objects.nonNull(response)) {
+					JSONObject json = new JSONObject(response);
+					String  status = json.getString("message");
+					JSONArray messageId = json.getJSONArray("message-id");
+					logger.info("messageid={}", messageId.toString());
+					return modelAndView.addObject("msg","The "+status+" To: " + mobileNumber + " and The Message Id: " + messageId.toString());
+				    }
+				    else
+					return modelAndView.addObject("msg", "SMS Sent Faild To:" + mobileNumber);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+		return modelAndView.addObject("msg", "SMS Sent Faild To:" + mobileNumber);
+
+	}
+
+	@RequestMapping(value = "/reports.do", method = RequestMethod.POST)
+	public ModelAndView deliveryReports(@RequestParam("messageId") String messageId) {
+		logger.info("deliveryReports() is called....");
+
+		ModelAndView modelAndView = new ModelAndView("index");
+		if (messageId != null) {
+			try {
+				logger.debug("The messageId entered is {}", messageId);
+				String response = xworkzService.deliveryReports(messageId);
+				if (Objects.nonNull(response)) {
+					JSONObject json = new JSONObject(response);
+					String status = json.getString("message_status");
+					String mobile = json.getString("mobile");
+					logger.info("mobile number:{} message_status={}", mobile, status);
+					return modelAndView.addObject("msg", "Fetched Delivery Reports for " + messageId + " The Mobile: "+ mobile + " And Status: " + status);
+				} else {
+					return modelAndView.addObject("msg","Delivery Reports Not available for the Message Id " + messageId);
+				}
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+		return modelAndView.addObject("msg", "Delivery Reports Not available for the Message Id " + messageId);
+	}
+
+	@RequestMapping(value = "/checkSMSBalance.do", method = RequestMethod.POST)
+	public ModelAndView checkSMSBalance() {
+		ModelAndView modelAndView = new ModelAndView("index");
+		try {
+			logger.info("checkSMSBalance() is called....");
+			logger.debug("Fecthing Balance...");
+			String result = xworkzService.checkSMSBalance();
+			if (Objects.nonNull(result))
+				return modelAndView.addObject("msg", "Total SMS Balance Left: " + result);
+			else
+				return modelAndView.addObject("msg", "Sorry couldn't able to fecth Balace at this time!");
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return modelAndView.addObject("msg", "Sorry couldn't able to fecth Balace at this time!");
 	}
 
 	@RequestMapping(value = "getListDetails.do", method = RequestMethod.GET, produces = {
@@ -149,10 +222,4 @@ public class MailController {
 		}
 	}
 
-	@RequestMapping(value = "/getReport.do", produces = "application/JSON", method = RequestMethod.GET)
-	@ResponseBody
-	public String data() {
-		logger.info("invoked {}", this.getClass().getSimpleName());
-		return xworkzService.getReport("2019-12-01", "2020-01-30");
-	}
 }

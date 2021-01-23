@@ -28,7 +28,8 @@ public class SendMailDTO {
 	private String fees;
 	private String fileName;
 	private String time;
-
+	private String classMode;
+	
 	public SendMailDTO() {
 		logger.info("{} Is Created...........", this.getClass().getSimpleName());
 	}
