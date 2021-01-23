@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.xworkz</groupId>
-	<artifactId>bulk-mail-app</artifactId>
+	<artifactId>bulk-mail-app-v2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -39,7 +39,7 @@
 		<org.thymeleaf.version>3.0.11.RELEASE</org.thymeleaf.version>
 		<thymeleaf-spring5.version>3.0.11.RELEASE</thymeleaf-spring5.version>
 		<appengine-maven-plugin.version>1.9.80</appengine-maven-plugin.version>
-		<fasterxml.jackson.core.version>2.12.1</fasterxml.jackson.core.version>
+		<fasterxml.jackson.core.version>2.9.4</fasterxml.jackson.core.version>
 		<fasterxml.jackson.annotations.version>2.9.4</fasterxml.jackson.annotations.version>
 		<maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
 		<maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
@@ -227,11 +227,11 @@
 			<version>${shared-configuration.version}</version>
 			<type>pom</type>
 		</dependency>
-      <dependency>
-      <groupId>com.google.cloud</groupId>
-      <artifactId>google-cloud-logging-logback</artifactId>
-      <version>0.118.1-alpha</version>
-      </dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-logging-logback</artifactId>
+			<version>0.118.1-alpha</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-maven-plugin -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
@@ -256,17 +256,29 @@
 					<groupId>com.fasterxml.jackson.core</groupId>
 					<artifactId>jackson-annotations</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-nop</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 			<version>${fasterxml.jackson.core.version}</version>
+			<exclusions>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>${fasterxml.jackson.annotations.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-nop</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
@@ -278,6 +290,21 @@
 			<artifactId>thymeleaf-spring5</artifactId>
 			<version>${thymeleaf-spring5.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple.wso2/json-simple -->
+		<!-- <dependency>
+			<groupId>com.googlecode.json-simple.wso2</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.wso2v1</version>
+		</dependency>
+ -->
 	</dependencies>
 
 	<build>
@@ -323,7 +350,7 @@
 					<artifactId>appengine-maven-plugin</artifactId>
 					<version>${appengine-maven-plugin-version}</version>
 					<configuration>
-						<deploy.projectId>bulk-mail-app</deploy.projectId>
+						<deploy.projectId>bulk-mail-app-v2</deploy.projectId>
 						<deploy.version>v01</deploy.version>
 						<stage.enableJarSplitting>true</stage.enableJarSplitting>
 						<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>

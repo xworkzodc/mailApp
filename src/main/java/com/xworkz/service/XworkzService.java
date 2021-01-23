@@ -8,7 +8,11 @@ public interface XworkzService {
 
 	public List<String> getContactListFromXls(MultipartFile file);
 
-	public void sendMSG(List<String> contactList, String message);
+	public String sendBulkMSG(List<String> contactList, String message);
+	
+	public String sendSingleSMS(String mobileNumber,String msg);
 
-	public String getReport(String startDate, String endDate);
+	public String deliveryReports(String messageId);
+	
+	public String checkSMSBalance();
 }

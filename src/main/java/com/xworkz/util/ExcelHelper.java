@@ -29,14 +29,14 @@ public class ExcelHelper {
 			Sheet excelSheet = workbook.getSheetAt(0);
 			logger.info("Last Row Number Is: " + excelSheet.getLastRowNum());
 			logger.info("Excel file Is opened");
-			logger.info("Size of Excel is {}", excelSheet.getLastRowNum());
+		    //logger.info("Size of Excel is {}", excelSheet.getLastRowNum());
 			Row row;
 			for (int i = 0; i <= excelSheet.getLastRowNum(); i++) {
 				row = (Row) excelSheet.getRow(i);
 				logger.debug("Data type is {}", row.getCell(0).getCellType());
 				if (row.getCell(0).getCellType() == 0) {
 					Long long1 = (long) row.getCell(0).getNumericCellValue();
-					logger.info("String is {}", long1);
+					logger.info("Data: {} is read and stored.", long1);
 					mobileNumList.add(String.valueOf(long1));
 				}
 			}

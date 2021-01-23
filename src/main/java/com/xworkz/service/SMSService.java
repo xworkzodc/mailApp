@@ -2,8 +2,10 @@ package com.xworkz.service;
 
 public interface SMSService {
   
-	public String sendCampaign(String apiKey, String secretKey, String useType, String phone, String message,
-			String senderId);
+	public String sendSMS(String apiKey, String username, String sender, String phone, String message,
+			String smsType,String route);
 	
-	public String reports(String usetype, String apiKey, String secretKey, String fromDate, String toDate);
+	public String deliveryReports(String apiKey, String username, String apiRequest ,String messageId);
+	
+	public String checkSMSBalance(String apiKey, String username, String apiRequest ,String route);
 }
