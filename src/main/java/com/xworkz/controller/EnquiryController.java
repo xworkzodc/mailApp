@@ -79,7 +79,7 @@ public class EnquiryController {
 
 	}
 
-	@Scheduled(cron = "${cron.expression}")
+	@Scheduled(cron = "${cron.expression}", zone = "IST")
 	@RequestMapping(value = "/downloadEnquirySchedule.do", method = RequestMethod.GET)
 	public ModelAndView downloadEnquiryScheduler() {
 		logger.debug("invoked downloadEnquiryScheduler() in controller");
