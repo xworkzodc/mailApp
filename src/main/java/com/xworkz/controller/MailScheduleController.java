@@ -20,7 +20,7 @@ public class MailScheduleController {
 	@Autowired
 	private MailSchedularService mailSchedular;
        
-	@Scheduled(cron = "${bday.cron.expression}")
+	@Scheduled(cron = "${bday.cron.expression}", zone = "IST")
 	@RequestMapping(value = "/mailSchedule.do", method = RequestMethod.GET)
 	public void sendScheduleMail() {
 		logger.info("invoked sendScheduleMail() in controller");
