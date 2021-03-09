@@ -20,6 +20,8 @@
 		<poi.version>3.17</poi.version>
 		<lombok.version>1.18.12</lombok.version>
 		<spring.version>5.0.0.RELEASE</spring.version>
+		<hibernate.version>5.0.3.Final</hibernate.version>
+		<mql.verson>8.0.18</mql.verson>
 		<commons-lang3.version>3.9</commons-lang3.version>
 		<commons-io.version>2.1</commons-io.version>
 		<poi-ooxml.version>3.17</poi-ooxml.version>
@@ -90,6 +92,32 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		
+		<!--Hibernate Jars -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mql.verson}</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -146,6 +174,11 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>${javax.jstl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -298,13 +331,12 @@
 			<version>1.1.1</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple.wso2/json-simple -->
-		<!-- <dependency>
-			<groupId>com.googlecode.json-simple.wso2</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1.wso2v1</version>
+		<!-- H2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.190</version>
 		</dependency>
- -->
 	</dependencies>
 
 	<build>

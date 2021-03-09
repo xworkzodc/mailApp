@@ -10,11 +10,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -39,9 +39,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
 import com.xworkz.dto.Subscriber;
 import com.xworkz.util.EncryptionHelper;
-import com.xworkz.util.ExcelFileColumn;
+import com.xworkz.util.BdayExcelFileColumn;
 import com.xworkz.util.MailSchedularConstants;
 
 @Service("emailService")
@@ -204,7 +205,7 @@ public class MailSchedularServiceImpl implements MailSchedularService {
 							messageHelper.setSubject(bdayMailSubject);
 							messageHelper.setText(content, true);
 
-						};
+						};	
 
 						if (Objects.nonNull(messagePreparator))
 							emailService.validateAndSendMailByMailId(messagePreparator);
@@ -283,17 +284,17 @@ public class MailSchedularServiceImpl implements MailSchedularService {
                             
 							if(row !=null) {
 								
-							Cell nameCell = row.getCell(ExcelFileColumn.ExcelFile_NAME_CELL);
+							Cell nameCell = row.getCell(BdayExcelFileColumn.ExcelFile_NAME_CELL);
 							nameCell.setCellType(CellType.STRING);
-							nameCell=row.getCell(ExcelFileColumn.ExcelFile_NAME_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
+							nameCell=row.getCell(BdayExcelFileColumn.ExcelFile_NAME_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
 							
-							Cell emailCell = row.getCell(ExcelFileColumn.ExcelFile_EMAIL_CELL);
+							Cell emailCell = row.getCell(BdayExcelFileColumn.ExcelFile_EMAIL_CELL);
 							emailCell.setCellType(CellType.STRING);
-							emailCell=row.getCell(ExcelFileColumn.ExcelFile_EMAIL_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
+							emailCell=row.getCell(BdayExcelFileColumn.ExcelFile_EMAIL_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
 							
-							Cell dobCell = row.getCell(ExcelFileColumn.ExcelFile_DOB_CELL);
+							Cell dobCell = row.getCell(BdayExcelFileColumn.ExcelFile_DOB_CELL);
 							dobCell.setCellType(CellType.NUMERIC);
-							dobCell=row.getCell(ExcelFileColumn.ExcelFile_DOB_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
+							dobCell=row.getCell(BdayExcelFileColumn.ExcelFile_DOB_CELL, MissingCellPolicy.RETURN_BLANK_AS_NULL);
 							
 							if(nameCell !=null || emailCell !=null || dobCell !=null){
 							subscribersList.add(new Subscriber(nameCell.getStringCellValue(),emailCell.getStringCellValue(), dobCell.getNumericCellValue()));

@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Vinay Viny
+ *
+ */
 @Component
 public class EncryptionHelper {
 	static Cipher cipher;
@@ -93,10 +97,10 @@ public class EncryptionHelper {
 //	  String stDC= en.decrypt(stEn);
 //	  System.out.println("Email decrypted key= "+stDC);
 	  
-	   String encPass = en.encrypt("xworkzodc");
+	   String encPass = en.encrypt("XWORKZ");
 	  System.out.println("encrypted key= "+encPass);
 	  
-	  String decPass= en.decrypt("SL+xd2DS2FEsed/8nyHejg==");
+	  String decPass= en.decrypt(encPass);
 	  System.out.println("decrypted key= "+decPass);
 	  }
 	 

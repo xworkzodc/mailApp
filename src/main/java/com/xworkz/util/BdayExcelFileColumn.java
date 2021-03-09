@@ -1,6 +1,6 @@
 package com.xworkz.util;
 
-public class ExcelFileColumn {
+public class BdayExcelFileColumn {
 
 	public static final int ExcelFile_NAME_CELL = 0;
 	public static final int ExcelFile_EMAIL_CELL = 1;

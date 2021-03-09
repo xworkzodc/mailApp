@@ -9,6 +9,10 @@ $(document).ready(function () {
 	$('.sendSingleSMS').hide();
 	$('.reports').hide();
 	$('.checkSMSBalance').hide();
+	$('.newEnquiry').hide();
+	$('.getCloudEnquiries').hide();
+	$('.getlatestEnquiries').hide();
+	$('.uploadEnquiry').hide(); 
 });
 
 let getDropdown  = () => fetch('https://raw.githubusercontent.com/xworkzodc/newsfeed/master/mailSender.json').then(data => data.json());
@@ -91,6 +95,29 @@ function getSMSType() {
     }
 }
 
+function getEnquiryType() {
+	
+    if ($('#enquiryOperations').val() == '0') {
+        allHide();
+    }
+    if ($('#enquiryOperations').val() == '1') {
+        allHide();
+        $('.newEnquiry').show();
+    }
+    if ($('#enquiryOperations').val() == '2') {
+        allHide();
+        $('.uploadEnquiry').show();
+    }
+    if ($('#enquiryOperations').val() == '3') {
+        allHide();
+    	$('.getCloudEnquiries').show();
+    }
+    if ($('#enquiryOperations').val() == '4') {
+        allHide(); 
+        $('.getlatestEnquiries').show(); 
+    }
+}
+
 function getListDetails() {
     $.ajax({
         type: "get",
@@ -123,8 +150,11 @@ function allHide() {
 	$('.sendSingleSMS').hide();
 	$('.reports').hide();
 	$('.checkSMSBalance').hide();
+	$('.newEnquiry').hide();
+	$('.getCloudEnquiries').hide();
+	$('.getlatestEnquiries').hide();
+	$('.uploadEnquiry').hide(); 
 }
-
 
 $(".newsFeed").ready(function () {
     $('input[type]').focusout(function (event) {
@@ -288,9 +318,103 @@ function hideMainTab(){
 	$('.bulkMail').hide();
 	$('.sendSMS').hide();
 	$('.sendBulkSMS').hide();
+	$('.getlatestEnquiries').hide();
+	$('.getCloudEnquiries').hide();
 }
 
 function clickFunc(className){
 	hideMainTab();
 	$('.'+className).show();
 }
+
+function handleSelect(page) {
+	window.location = page.value + ".jsp";
+}
+
+function checkEmailExist() {
+	var contextPath = $("meta[name='contextPath']").attr("content");
+	var EnquiryDTO = {};
+	EnquiryDTO["emailId"] = document.forms["newenq"]["emailId"].value; //document.forms["newenq"]["emailId"].value;
+		
+	 $.ajax( {
+		type : "POST",
+		contentType : "application/json",
+		url :contextPath + "/getEnquiryByEmail.do",
+		data : JSON.stringify(EnquiryDTO),
+		dataType : 'json',
+		success : function(data) {
+			if (data.emailId != null) {
+				$('#isE').text('Email Id Already Exist!');
+			 }
+			else {
+				$('#isE').text('');
+			}
+		  },
+		 error : function(e) {
+                console.log("ERROR: ", e);
+         }
+	});
+}
+
+function checkNameExist() {
+	var contextPath = $("meta[name='contextPath']").attr("content");
+	var EnquiryDTO = {};
+	EnquiryDTO["fullName"] = document.forms["newenq"]["fullName"].value; //document.forms["newenq"]["emailId"].value;
+		
+	 $.ajax( {
+		type : "POST",
+		contentType : "application/json",
+		url :contextPath + "/getEnquiryByName.do",
+		data : JSON.stringify(EnquiryDTO), 
+		dataType : 'json',
+		success : function(data) {
+			if (data.fullName != null) {
+				$('#isName').text('FullName Exist!,Check Once');
+			 }
+			else {
+				$('#isName').text('');
+			}
+		  },
+		 error : function(e) {
+                console.log("ERROR: ", e);
+         }
+	});
+}
+
+function checkMobileNoExist() {
+    var contextPath = $("meta[name='contextPath']").attr("content");
+	var EnquiryDTO = {};
+	EnquiryDTO["mobileNo"] = document.forms["newenq"]["mobileNo"].value; 
+		
+	 $.ajax( {
+		type : "POST",
+		contentType : "application/json",
+		url :contextPath + "/getEnquiryByMobile.do",
+		data : JSON.stringify(EnquiryDTO), 
+		dataType : 'json',
+		success : function(data) {
+			if (data.mobileNo != null) {
+				$('#isMobile').text('Mobile Number Exist!,Check Once');
+			 }
+			else {
+				$('#isMobile').text('');
+			}
+		  },
+		 error : function(e) {
+                console.log("ERROR: ", e);
+         }
+	});
+}
+
+$(document).ready(function() {
+	var table = $('#example').DataTable({
+		responsive : true,
+		scrollY : 500,
+		deferRender : true,
+		scroller : true
+	});
+
+	new $.fn.dataTable.FixedHeader(table);
+});
+
+document.querySelector("#today").valueAsDate = new Date();

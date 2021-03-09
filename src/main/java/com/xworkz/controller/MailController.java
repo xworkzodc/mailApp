@@ -37,12 +37,12 @@ public class MailController {
 	private Logger logger = LoggerFactory.getLogger(MailController.class);
 
 	public MailController() {
-		logger.info("{} Is Created...........", this.getClass().getSimpleName());
+		logger.debug("{} Is Created...........", this.getClass().getSimpleName());
 	}
 
 	@RequestMapping(value = "/sendSMS.do", method = RequestMethod.POST)
 	public ModelAndView senBulkSMS(@RequestParam("uploadFile") MultipartFile file, @RequestParam("msg") String msg) {
-		logger.info("is called....");
+		logger.debug("is called....");
 
 		ModelAndView modelAndView = new ModelAndView("index");
 		if (!file.isEmpty()) {
@@ -53,7 +53,7 @@ public class MailController {
 				if (Objects.nonNull(response))
 				return modelAndView.addObject("msg", "Bulk SMS Sent Successfully");
 			 }
-			logger.info("Is file is Empty :{}", contactList.isEmpty());
+			logger.debug("Is file is Empty :{}", contactList.isEmpty());
 		} else {
 			modelAndView.addObject("msg", "File is not found.........");
 		}
@@ -63,7 +63,7 @@ public class MailController {
 
 	@RequestMapping(value = "/sendSingleSMS.do", method = RequestMethod.POST)
 	public ModelAndView sendSingleSMS(@RequestParam("mobile") String mobileNumber,@RequestParam("message") String message) {
-		logger.info("sendSingleSMS() is called....");
+		logger.debug("sendSingleSMS() is called....");
 		ModelAndView modelAndView = new ModelAndView("index");
 		if (Objects.nonNull(mobileNumber) && Objects.nonNull(message)) {
 			logger.debug("The Mobile Number entered is {}", mobileNumber);
@@ -73,7 +73,7 @@ public class MailController {
 					JSONObject json = new JSONObject(response);
 					String  status = json.getString("message");
 					JSONArray messageId = json.getJSONArray("message-id");
-					logger.info("messageid={}", messageId.toString());
+					logger.debug("messageid={}", messageId.toString());
 					return modelAndView.addObject("msg","The "+status+" To: " + mobileNumber + " and The Message Id: " + messageId.toString());
 				    }
 				    else
@@ -88,7 +88,7 @@ public class MailController {
 
 	@RequestMapping(value = "/reports.do", method = RequestMethod.POST)
 	public ModelAndView deliveryReports(@RequestParam("messageId") String messageId) {
-		logger.info("deliveryReports() is called....");
+		logger.debug("deliveryReports() is called....");
 
 		ModelAndView modelAndView = new ModelAndView("index");
 		if (messageId != null) {
@@ -99,7 +99,7 @@ public class MailController {
 					JSONObject json = new JSONObject(response);
 					String status = json.getString("message_status");
 					String mobile = json.getString("mobile");
-					logger.info("mobile number:{} message_status={}", mobile, status);
+					logger.debug("mobile number:{} message_status={}", mobile, status);
 					return modelAndView.addObject("msg", "Fetched Delivery Reports for " + messageId + " The Mobile: "+ mobile + " And Status: " + status);
 				} else {
 					return modelAndView.addObject("msg","Delivery Reports Not available for the Message Id " + messageId);
@@ -115,7 +115,7 @@ public class MailController {
 	public ModelAndView checkSMSBalance() {
 		ModelAndView modelAndView = new ModelAndView("index");
 		try {
-			logger.info("checkSMSBalance() is called....");
+			logger.debug("checkSMSBalance() is called....");
 			logger.debug("Fecthing Balance...");
 			String result = xworkzService.checkSMSBalance();
 			if (Objects.nonNull(result))
@@ -134,49 +134,49 @@ public class MailController {
 	public MailChimpList getList(@RequestHeader("Accept") HttpHeaders headers,
 			@RequestParam("msgType") Integer msgType) {
 		MailChimpList list = new Gson().fromJson(clientService.getAllMailChimpList(msgType), MailChimpList.class);
-		logger.info("List is {}", list);
+		logger.debug("List is {}", list);
 		return list;
 
 	}
 
 	@RequestMapping(value = "newsfeed.do", method = RequestMethod.POST)
 	public ModelAndView sendNewsFeed(@ModelAttribute SendMailDTO mailDTO) {
-		logger.info("Image Url Is {}", mailDTO.getImageURL());
+		logger.debug("Image Url Is {}", mailDTO.getImageURL());
 		return sendMail(mailDTO);
 	}
 
 	@RequestMapping(value = "newJoiner.do", method = RequestMethod.POST)
 	public ModelAndView sendNewJoiner(@ModelAttribute SendMailDTO mailDTO) {
-		logger.info("data is {}", mailDTO);
+		logger.debug("data is {}", mailDTO);
 		clientService.getHTMLTextFromFile(mailDTO);
 		return sendMail(mailDTO);
 	}
 
 	@RequestMapping(value = "feesPaid.do", method = RequestMethod.POST)
 	public ModelAndView sendFeesAcknnowledgement(@ModelAttribute SendMailDTO mailDTO) {
-		logger.info("data is {}", mailDTO);
+		logger.debug("data is {}", mailDTO);
 		return sendMail(mailDTO);
 	}
 
 	@RequestMapping(value = "birthdayGreeting.do", method = RequestMethod.POST)
 	public ModelAndView sendBirthdayGreeting(@ModelAttribute SendMailDTO mailDTO) {
-		logger.info("Image Url is {}", mailDTO.getImageURL());
+		logger.debug("Image Url is {}", mailDTO.getImageURL());
 		return sendMail(mailDTO);
 	}
 
 	@RequestMapping(value = "courseContain.do", method = RequestMethod.POST)
 	public ModelAndView sendCourseContain(@ModelAttribute SendMailDTO mailDTO) {
-		logger.info("data is {}", mailDTO);
+		logger.debug("data is {}", mailDTO);
 		return sendMail(mailDTO);
 	}
 
 	public ModelAndView sendMail(SendMailDTO dto) {
 		ModelAndView modelAndView = new ModelAndView("index");
-		logger.info("List Name=" + dto.getListName());
-		logger.info("Msg Id=" + dto.getMsgType());
+		logger.debug("List Name=" + dto.getListName());
+		logger.debug("Msg Id=" + dto.getMsgType());
 		String listId = clientService.getListIdFromListName(dto.getListName(), dto.getMsgType());
 		if (listId != null) {
-			logger.info("list Id Is Fetched..........................");
+			logger.debug("list Id Is Fetched..........................");
 			String campaignId = clientService.createCompaign(listId, dto);
 			return campaignCreate(dto, modelAndView, campaignId);
 		} else {
@@ -188,7 +188,7 @@ public class MailController {
 
 	private ModelAndView campaignCreate(SendMailDTO dto, ModelAndView modelAndView, String campaignId) {
 		if (campaignId != null) {
-			logger.info("Campaign Id Created Successfully...................");
+			logger.debug("Campaign Id Created Successfully...................");
 			boolean edit = clientService.generateContent(campaignId, dto);
 			return editMail(modelAndView, campaignId, edit, dto.getMsgType());
 		} else {
@@ -200,7 +200,7 @@ public class MailController {
 
 	private ModelAndView editMail(ModelAndView modelAndView, String campaignId, boolean edit, Integer integer) {
 		if (edit) {
-			logger.info("Html Edited Successfully.........................");
+			logger.debug("Html Edited Successfully.........................");
 			boolean result = clientService.sendCompaign(campaignId, integer);
 			return send(modelAndView, result);
 		} else {
@@ -213,7 +213,7 @@ public class MailController {
 	private ModelAndView send(ModelAndView modelAndView, boolean result) {
 		if (result) {
 			modelAndView.addObject("msg", "Mail sent Successfully...................");
-			logger.info("Mail sent Successfully...................");
+			logger.debug("Mail sent Successfully...................");
 			return modelAndView;
 		} else {
 			modelAndView.addObject("msg", "Mail sent faild, Please Try Again................");

@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,8 @@ public class MailScheduleController {
 	
 	@Autowired
 	private MailSchedularService mailSchedular;
-
+       
+	@Scheduled(cron = "${bday.cron.expression}")
 	@RequestMapping(value = "/mailSchedule.do", method = RequestMethod.GET)
 	public void sendScheduleMail() {
 		logger.info("invoked sendScheduleMail() in controller");
@@ -26,7 +28,6 @@ public class MailScheduleController {
 			mailSchedular.birthadyMailSender();
             logger.info("Birthady Mails Task Exccution Done");
 		} catch (URISyntaxException | IOException e) {
-			e.printStackTrace();
 			logger.error(e.getMessage(), e);
 		}
 	}

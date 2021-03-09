@@ -2,12 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- <html> -->
+<html>
 <head>
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-<!-- 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
-<!-- 	<meta name="keywords" content="Institute Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" /> -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="./img/Logo.png">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -15,23 +12,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	crossorigin="anonymous">
 
-<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-	crossorigin="anonymous"></script>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="./css/index.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -80,12 +63,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="col-md-3"></div>
 				</div>
 			</div>
-									
-			<div class="container container_border ">	
-			    <div class="sendSMS">
+
+			<div class="container container_border ">
+				<div class="sendSMS">
 					<h2 align="center"
-						style="margin-top: 5%; color: white; padding-top: 3%">
-						Send SMS</h2>
+						style="margin-top: 5%; color: white; padding-top: 3%">Send
+						SMS</h2>
 					<div class="panel panel-default">
 						<div class="panel-body" align="center" style="margin-top: 2%">
 							<div class="row mt-3 mb-3">
@@ -105,16 +88,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 				</div>
-			
+
 				<div class="bulkMail">
 					<h2 align="center"
-						style="margin-top: 5%; color: white; padding-top: 3%" >Bulk
+						style="margin-top: 5%; color: white; padding-top: 3%">Bulk
 						Mails</h2>
 					<div class="panel panel-default">
 						<div class="panel-heading" align="center">
 							<h4 style="margin-top: 5%; color: white;">
-								<br> <br> <b>Select MailId To
-									Check The Lists</b>
+								<br> <br> <b>Select MailId To Check The Lists</b>
 							</h4>
 						</div>
 						<div class="panel-body" align="center" style="margin-top: 2%">
@@ -467,7 +449,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="sendBulkSMS">
 					<div class="panel panel-default">
 						<div class="panel-body" align="center" style="margin-top: 2%">
@@ -484,7 +466,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<tr>
 										<td><h5>
 												Enter Message<sup>*</sup>:
-											</h5></td>
+											</h5>
+										</td>
 										<td><textarea rows="4" cols="30" class="form-control"
 												id="txtMsg" name="msg"></textarea>
 											<h6 id="count_message"></h6></td>
@@ -506,7 +489,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="sendSingleSMS">
 					<div class="panel panel-default">
 						<div class="panel-body" align="center" style="margin-top: 2%">
@@ -522,10 +505,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</tr>
 									<tr>
 										<td>
-											<h5>Enter Mobile Number<sup>*</sup>:</h5>
+											<h5>
+												Enter Mobile Number<sup>*</sup>:
+											</h5>
 										</td>
-										<td><input type="text" class="form-control"
-											name="mobile"></td>
+										<td><input type="text" class="form-control" name="mobile"></td>
 									</tr>
 									<tr>
 										<td><h5>
@@ -535,7 +519,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												id="txtMsg" name="message"></textarea>
 											<h6 id="count_message"></h6></td>
 									</tr>
-									
+
 									<tr>
 										<td colspan="2" align="center"><input
 											class="col-sm-5 btn btn-light" type="submit" value="Send SMS"></td>
@@ -545,8 +529,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 				<div class="reports">
 					<div class="panel panel-default">
 						<div class="panel-body" align="center" style="margin-top: 2%">
@@ -562,22 +546,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</tr>
 									<tr>
 										<td>
-											<h5>Enter Message Id<sup>*</sup>:</h5>
+											<h5>
+												Enter Message Id<sup>*</sup>:
+											</h5>
 										</td>
 										<td><input type="text" class="form-control"
 											name="messageId"></td>
 									</tr>
-									
+
 									<tr>
 										<td colspan="2" align="center"><input
-											class="col-sm-5 btn btn-light" type="submit" value="Get Report"></td>
+											class="col-sm-5 btn btn-light" type="submit"
+											value="Get Report"></td>
 									</tr>
 								</table>
 							</form>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="checkSMSBalance">
 					<div class="panel panel-default">
 						<div class="panel-body" align="center" style="margin-top: 2%">
@@ -588,65 +575,76 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									style="color: white">
 									<tr>
 										<td colspan="2" align="center">
-										   <h3>
-											<b>Check SMS Balance</b>
-										  </h3>
+											<h3>
+												<b>Check SMS Balance</b>
+											</h3>
 										</td>
-									 </tr>
-									 <tr>
+									</tr>
+									<tr>
 										<td colspan="2" align="center"><input
-										class="col-sm-5 btn btn-light" type="submit" value="Check Balance"></td>
+											class="col-sm-5 btn btn-light" type="submit"
+											value="Check Balance"></td>
 									</tr>
 								</table>
 							</form>
 						</div>
 					</div>
 				</div>
-			</div>			
+			</div>
 
-				<!-- The Modal -->
-				<div class="modal" id="listModal">
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
+			<!-- The Modal -->
+			<div class="modal" id="listModal">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
 
-							<!-- Modal Header -->
-							<div class="modal-header">
-								<h4 class="modal-title">MailChimp List</h4>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">MailChimp List</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
 
-							<!-- Modal body -->
-							<div class="modal-body">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th scope="col">#</th>
-											<th scope="col-2">List Name</th>
-											<th scope="col">Total Subscriber</th>
-											<th scope="col">Description</th>
-										</tr>
-									</thead>
-									<tbody class="listBody">
+						<!-- Modal body -->
+						<div class="modal-body">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col-2">List Name</th>
+										<th scope="col">Total Subscriber</th>
+										<th scope="col">Description</th>
+									</tr>
+								</thead>
+								<tbody class="listBody">
 
-									</tbody>
-								</table>
-							</div>
+								</tbody>
+							</table>
+						</div>
 
-							<!-- Modal footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger"
-									data-dismiss="modal">Close</button>
-							</div>
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<script
-				src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-			<script type="text/javascript"
-				src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-			<script type="text/javascript" src="./js/index.js"></script>
 		</div>
+         <div>
+			<nav class="navbar navbar-expand-md navbar-dark bg-dark"></nav>
+		</div>
+		<!-- Latest compiled JavaScript -->
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+			integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+			integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="./js/index.js"></script>
+	</div>
 </body>
 </html>

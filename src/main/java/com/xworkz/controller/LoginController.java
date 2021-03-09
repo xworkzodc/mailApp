@@ -13,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xworkz.dto.LoginDTO;
 import com.xworkz.service.LoginService;
 
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.util.StatusPrinter;
+
 @RestController
 @RequestMapping("/")
 public class LoginController {
@@ -26,12 +29,15 @@ public class LoginController {
 	private LoginService loginService;
 
 	public LoginController() {
-		logger.info("{} Is Created...........", this.getClass().getSimpleName());
+		logger.debug("{} Is Created...........", this.getClass().getSimpleName());
+		  LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+		  // print logback's internal status
+		  StatusPrinter.print(lc);
 	}
 
 	@RequestMapping(value = "/otp.do", method = RequestMethod.POST)
 	public ModelAndView generateOTP(@ModelAttribute LoginDTO dto) {
-		logger.info("invoked generateOTP()...");
+		logger.debug("invoked generateOTP()...");
 		ModelAndView modelAndView = new ModelAndView("Login");
 		try {
 			modelAndView.addObject("dto", dto);
@@ -55,7 +61,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public ModelAndView onLogin(@ModelAttribute LoginDTO dto, Model model) {
-		logger.info("invoked onLogin()...");
+		logger.debug("invoked onLogin()...");
 		try {
 			boolean validation = this.loginService.validateAndLogin(dto);
 			if (validation) {
@@ -72,7 +78,6 @@ public class LoginController {
 				return new ModelAndView("Login");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.error(e.getMessage(), e);
 		}
 

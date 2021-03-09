@@ -14,13 +14,13 @@ import com.xworkz.util.ExcelHelper;
 @Service
 public class XworkzServiceImpl implements XworkzService {
 
-	static Logger logger = LoggerFactory.getLogger(XworkzServiceImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(XworkzServiceImpl.class);
 	@Autowired
-	ExcelHelper excelHelper;
+	private ExcelHelper excelHelper;
 	@Autowired
-	SMSService smsService;
+	private SMSService smsService;
 	@Autowired
-	EncryptionHelper encryptionHelper;
+	private EncryptionHelper encryptionHelper;
 	@Value("${apiKey}")
 	private String apiKey;
 	@Value("${SMSusername}")
@@ -105,17 +105,8 @@ public class XworkzServiceImpl implements XworkzService {
 	@Override
 	public String checkSMSBalance() {
 		try {
-			/*
-			 * logger.debug("API KEY is {} SMSusername Key is {} Sender id is {}",apiKey,
-			 * SMSusername,sender);
-			 * 
-			 * logger.
-			 * debug("API KEY is {} SMSusername Key is {} Sender id is {} report is {}",
-			 * encryptionHelper.decrypt(apiKey), encryptionHelper.decrypt(SMSusername),
-			 * encryptionHelper.decrypt(sender), report);
-			 */
-
-			logger.debug("API KEY is {}", encryptionHelper.decrypt(apiKey));
+			
+			//logger.debug("API KEY is {}", encryptionHelper.decrypt(apiKey));
 			String result = smsService.checkSMSBalance(encryptionHelper.decrypt(apiKey), encryptionHelper.decrypt(SMSusername), creditCheck, route);
 			logger.info("checkSMSBalance Result is {}", result);
 			return result;

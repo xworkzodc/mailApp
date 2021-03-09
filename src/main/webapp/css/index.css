@@ -88,6 +88,11 @@ table h4 {
 .error {
 	color: red;
 	font-size: 14px;
+	font-weight: bold;
+}
+
+textarea {
+	resize: none;
 }
 
 @media screen and (max-width: 500px) {
