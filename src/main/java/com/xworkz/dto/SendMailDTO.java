@@ -1,5 +1,7 @@
 package com.xworkz.dto;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +12,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SendMailDTO {
+public class SendMailDTO implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private Logger logger = LoggerFactory.getLogger(LoginDTO.class);
 
@@ -28,7 +32,8 @@ public class SendMailDTO {
 	private String fees;
 	private String fileName;
 	private String time;
-
+	private String classMode;
+	
 	public SendMailDTO() {
 		logger.info("{} Is Created...........", this.getClass().getSimpleName());
 	}

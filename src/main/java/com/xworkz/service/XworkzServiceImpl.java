@@ -14,22 +14,28 @@ import com.xworkz.util.ExcelHelper;
 @Service
 public class XworkzServiceImpl implements XworkzService {
 
-	static Logger logger = LoggerFactory.getLogger(XworkzServiceImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(XworkzServiceImpl.class);
 	@Autowired
-	ExcelHelper excelHelper;
+	private ExcelHelper excelHelper;
 	@Autowired
-	SMSService smsService;
+	private SMSService smsService;
 	@Autowired
-	EncryptionHelper encryptionHelper;
+	private EncryptionHelper encryptionHelper;
 	@Value("${apiKey}")
 	private String apiKey;
-	@Value("${secretKey}")
-	private String secretKey;
-	@Value("${senderId}")
-	private String senderId;
-	@Value("${useType}")
-	private String useType;
-
+	@Value("${SMSusername}")
+	private String SMSusername;
+	@Value("${sender}")
+	private String sender;
+	@Value("${simpleSMS}")
+	private String simpleSMS;
+	@Value("${credit}")
+	private String creditCheck;
+	@Value("${route}")
+	private String route;
+	@Value("${report}")
+	private String report;
+	
 	public List<String> getContactListFromXls(MultipartFile file) {
 		if (!file.isEmpty()) {
 			List<String> contactList = null;
@@ -50,27 +56,63 @@ public class XworkzServiceImpl implements XworkzService {
 		return null;
 	}
 
-	public void sendMSG(List<String> contactList, String message) {
+	public String sendBulkMSG(List<String> contactList, String message) {
+		logger.info(contactList.toString());
+		String res = null;
 		for (String phone : contactList) {
-			if (phone.length() == 10) {
+			if (phone.length() != 0) {
 				try {
-					Thread.sleep(6000);
-					logger.debug("API KEY is {} Secret Key is {} Sender id is {} useType is {}",
-							encryptionHelper.decrypt(apiKey), encryptionHelper.decrypt(secretKey), senderId, useType);
-					String res = smsService.sendCampaign(encryptionHelper.decrypt(apiKey),
-							encryptionHelper.decrypt(secretKey), useType, phone, message, senderId);
-					logger.info("Result is {}", res);
-				} catch (InterruptedException e) {
+					Thread.sleep(600);
+					res = smsService.sendSMS(encryptionHelper.decrypt(apiKey), encryptionHelper.decrypt(SMSusername),encryptionHelper.decrypt(sender),
+							phone, message,simpleSMS, route);
+					logger.info("BulkMSG Result is {}", res);
+				} catch (Exception e) {
 					logger.error("\n\nMessage is {} and exception is {}\n\n\n\n\n", e.getMessage(), e);
 				}
 
 			}
 		}
+		return res;
 	}
 
-	public String getReport(String startDate, String endDate) {
-		return smsService.reports("prod", apiKey, secretKey, "2019-12-01", "2020-01-30");
-
+	@Override
+	public String sendSingleSMS(String mobileNumber, String message) {
+		try {
+			logger.debug("smsType is :{} mobileNumber is :{} message is: {}",simpleSMS,mobileNumber,message);
+			String res = smsService.sendSMS(encryptionHelper.decrypt(apiKey), encryptionHelper.decrypt(SMSusername),encryptionHelper.decrypt(sender),
+					 mobileNumber, message,simpleSMS, route);
+			logger.info("SingleSMS Result is {}", res);
+			return res;
+		} catch (Exception e) {
+			logger.error("\n\nMessage is {} and exception is {}\n\n\n\n\n", e.getMessage(), e);
+		}
+		return null;
 	}
 
+	@Override
+	public String deliveryReports(String messageId) {
+		try {
+			String res = smsService.deliveryReports(encryptionHelper.decrypt(apiKey),
+					encryptionHelper.decrypt(SMSusername), report, messageId);
+			logger.info("Delivery Reports Result is {}", res);
+			return res;
+		} catch (Exception e) {
+			logger.error("\n\nMessage is {} and exception is {}\n\n\n\n\n", e.getMessage(), e);
+		}
+		return null;
+	}
+
+	@Override
+	public String checkSMSBalance() {
+		try {
+			
+			//logger.debug("API KEY is {}", encryptionHelper.decrypt(apiKey));
+			String result = smsService.checkSMSBalance(encryptionHelper.decrypt(apiKey), encryptionHelper.decrypt(SMSusername), creditCheck, route);
+			logger.info("checkSMSBalance Result is {}", result);
+			return result;
+		} catch (Exception e) {
+			logger.error("\n\nMessage is {} and exception is {}\n\n\n\n\n", e.getMessage(), e);
+		}
+		return null;
+	}
 }

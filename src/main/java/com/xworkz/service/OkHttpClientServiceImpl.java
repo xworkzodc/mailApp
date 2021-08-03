@@ -1,15 +1,20 @@
 package com.xworkz.service;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.okhttp.MediaType;
@@ -21,6 +26,7 @@ import com.xworkz.dto.MailChimpCampaign;
 import com.xworkz.dto.MailChimpList;
 import com.xworkz.dto.MailChimpMailDetails;
 import com.xworkz.dto.SendMailDTO;
+import com.xworkz.util.EncryptionHelper;
 
 @Service
 @Configuration
@@ -43,8 +49,13 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	private String fromName1;
 	@Value("${http1}")
 	private String http1;
+	@Value("${bulkMailTemplate}")
+	private String templatesLink;
 	private Account accountId = Account.Default;
 
+	@Autowired
+	EncryptionHelper helper;
+	
 	private Logger logger = LoggerFactory.getLogger(OkHttpClientServiceImpl.class);
 
 	public OkHttpClientServiceImpl() {
@@ -74,7 +85,7 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 			Request request = new Request.Builder()
 					.url("https://" + htp + ".api.mailchimp.com/3.0/campaigns/" + compaignId + "/actions/send")
 					.post(body).addHeader("Content-Type", "application/json")
-					.addHeader("Content-Type", "application/json").addHeader("Authorization", a).build();
+					.addHeader("Content-Type", "application/json").addHeader("Authorization", helper.decrypt(a)).build();
 			Response response = client.newCall(request).execute();
 			logger.info("Campaign Response is {}", response.isSuccessful());
 			if (response.isSuccessful()) {
@@ -154,7 +165,7 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 				RequestBody body = RequestBody.create(mediaType, htmlText.toString());
 				Request request = new Request.Builder()
 						.url("https://" + htp + ".api.mailchimp.com/3.0/campaigns/" + campaignId + "/content").put(body)
-						.addHeader("Content-Type", "application/json").addHeader("Authorization", a).build();
+						.addHeader("Content-Type", "application/json").addHeader("Authorization", helper.decrypt(a)).build();
 				Response response = client.newCall(request).execute();
 				logger.info("Edit Response is {} ", response.body().string());
 				if (response.isSuccessful())
@@ -189,7 +200,7 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 			logger.info(jsonObject.toString());
 			RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
 			Request request = new Request.Builder().url("https://" + htp + ".api.mailchimp.com/3.0/campaigns")
-					.post(body).addHeader("Content-Type", "application/json").addHeader("Authorization", a)
+					.post(body).addHeader("Content-Type", "application/json").addHeader("Authorization", helper.decrypt(a))
 					.addHeader("cache-control", "no-cache")
 					.addHeader("Postman-Token", "8c397e18-518f-463b-b3a7-3a65a7d4b5b9").build();
 			Response response = client.newCall(request).execute();
@@ -287,7 +298,7 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 			OkHttpClient client = new OkHttpClient();
 			Request request = new Request.Builder().url("https://" + htp + ".api.mailchimp.com/3.0/lists").get()
 					.addHeader("Content-Type", "application/x-www-form-urlencoded")
-					.addHeader("User-Agent", "Mozilla/5.0").addHeader("Authorization", a)
+					.addHeader("User-Agent", "Mozilla/5.0").addHeader("Authorization", helper.decrypt(a))
 					.addHeader("cache-control", "no-cache").build();
 			Response response = client.newCall(request).execute();
 			String result = response.body().string();
@@ -316,13 +327,24 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	public String getHTMLTextFromFile(SendMailDTO dto) {
 		String data = "";
 		try {
-			File resource = new ClassPathResource("/html/" + dto.getFileName()).getFile();
-			data = new String(Files.readAllBytes(resource.toPath()));
-			logger.info("String is {}", data);
+			RestTemplate restTemplate = new RestTemplate();
+			URI url = new URI(templatesLink + dto.getFileName());
+			HttpHeaders headers = new HttpHeaders();
+			Charset utf8 = Charset.forName("UTF-8");
+			org.springframework.http.MediaType mediaType = new org.springframework.http.MediaType("text", "html", utf8);
+			headers.setContentType(mediaType);
+
+			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+			data = responseEntity.getBody();
+
+			logger.info("html String is {}", data);
 			data = replaceHTMLData(dto, data);
 			logger.info("After Change the dynamic news {}", data);
-		} catch (IOException e) {
-			logger.error("Exception is {} and message is {}", e, e.getMessage());
+
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			logger.error("Error is {} and Message is {} ", e, e.getMessage());
 		}
 		return data;
 	}
@@ -358,6 +380,10 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 		if (data.contains("courseFees")) {
 			data = data.replace("courseFees", dto.getFees() != null ? dto.getFees() : "");
 		}
+		if (data.contains("courseMode")) {
+			data = data.replace("courseMode", dto.getClassMode() != null ? dto.getClassMode() : "");
+		}
+
 		return data;
 	}
 }

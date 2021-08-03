@@ -12,14 +12,10 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
 
-	<context:component-scan
-		base-package="com.xworkz" />
+	<context:component-scan base-package="com.xworkz" />
 
-	<context:property-placeholder
-		location="classpath:prop/mailChimp.properties" />
-	<context:property-placeholder
-		location="classpath:prop/httpConnection.properties" />
 	<mvc:annotation-driven />
+	<task:annotation-driven />
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</bean>
@@ -33,7 +29,7 @@
     <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
     <property name="prefix" value="classpath:/templates/" />
     <property name="suffix" value=".html" />
-    <property name="templateMode" value="HTML5" />
+    <property name="templateMode" value="HTML"/>
 </bean>
 
 <bean id="templateEngine"
@@ -42,29 +38,44 @@
   <property name="enableSpringELCompiler" value="true" />
 </bean>
 
-	<bean id="mailSender"
-		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="xworkzdev@gmail.com" />
-		<property name="password" value="Think@Pad_Xworkz789" />
-		<property name="javaMailProperties">
+	<bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		id="localSessionFactoryBean">
+		<property name="dataSource" ref="driverManagerDataSource"></property>
+		<property name="packagesToScan" value="com.xworkz.entity" />
+		<property name="hibernateProperties">
 			<props>
-				<prop key="mail.transport.protocol">smtp</prop>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.debug">true</prop>
-			</props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<prop key="hbm2ddl.auto">update</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.show_sql">true</prop>
+		 </props>
 		</property>
 	</bean>
-    <bean id="myTriggerId" class="org.springframework.scheduling.support.CronTrigger">
-    <constructor-arg name="expression" value="0 0 8 * * ?"/>
-    <constructor-arg name="timeZone" value="IST"/>
-    </bean>
+	
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		id="propertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+		<property name="locations">
+		<list>
+		    <value>/WEB-INF/classes/prop/mailChimp.properties</value>
+			<value>WEB-INF/classes/prop/database.properties</value>
+			<value>/WEB-INF/classes/prop/httpConnection.properties</value>	
+		</list>
+		</property>
+	</bean> 
 
-    <task:scheduled-tasks scheduler="myScheduler">
-		<task:scheduled ref="emailService" method="birthadyMailSender" trigger="myTriggerId"/>
-	</task:scheduled-tasks>
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="driverManagerDataSource">
+		<constructor-arg
+			value="${driverManagerDataSource.url}" />
+		<constructor-arg
+			value="${driverManagerDataSource.user}" />
+		<constructor-arg
+			value="${driverManagerDataSource.pass}" />
+		<property name="driverClassName"
+			value="${driverManagerDataSource.className}" />
+	</bean>
 
-	<task:scheduler id="myScheduler" pool-size="10" />
 </beans>

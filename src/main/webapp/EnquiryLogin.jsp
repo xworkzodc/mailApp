@@ -6,7 +6,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="./img/Logo.png">
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -14,7 +13,8 @@
 	crossorigin="anonymous">
 
 <link rel="stylesheet" type="text/css" href="./css/index.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -25,18 +25,19 @@
 			<div class="header-right">
 				<h1>Om's Development Center</h1>
 			</div>
-			<div style="align-content: flex-start; width: 8%;">
+			<div style="width: 8%;">
 				<button onclick="location.href='Welcome.jsp'" type="button"
 					class="btn btn-success btn-block">Main Menu</button>
 			</div>
+
 		</div>
 		<div class="container">
 			<div class="container" align="center">
 				<div>
 					<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 					<h3
-						style="color: white; font-weight: 900; margin-left: 30%; align-items: center;">
-						<b>X-Workz Bulk Mail And SMS</b>
+						style="color: white; font-weight: 900; width: 100%; align-items: center;">
+						<b>X-WorkZ Enquiry And Call Management</b>
 					</h3>
 					</nav>
 				</div>
@@ -45,7 +46,7 @@
 					<div class="col-md-3"></div>
 					<div class="col-md-6">
 						<h3 style="color: red;">
-							<b>${Successmsg}${Failmsg}${loginfaildbypasswod}</b>
+							<b>${LoginMsg}${Failmsg}${loginfaildbypasswod}</b>
 						</h3>
 					</div>
 					<div class="col-md-3"></div>
@@ -60,24 +61,16 @@
 							<div class="row mt-3 mb-3">
 								<div class="col-sm-4"></div>
 								<div class="col-sm-4" align="center">
-									<form action="otp.do" method="post">
+									<form action="enquiryLogin.do" method="post">
 										<div class="form-group input-group">
 											<div class="input-group-prepend">
 												<span class="input-group-text"> <i class="fa fa-user"
 													style="font-size: 24px"></i>
 												</span>
 											</div>
-											<input name="userName" type="text" class="form-control"
-												placeholder="Enter userName" value="${dto.userName}" />
+											<input name="userName" type="email" class="form-control"
+												placeholder="Enter Email Id" value="${dto.userName}" />
 										</div>
-
-										<div class="form-group">
-											<button type="submit" class="btn btn-primary btn-block">
-												Generate OTP</button>
-										</div>
-									</form>
-									<br> <br>
-									<form action="login.do" method="post">
 										<div class="form-group input-group">
 											<div class="input-group-prepend">
 												<span class="input-group-text"> <i class="fa fa-lock"
@@ -85,19 +78,23 @@
 												</span>
 											</div>
 											<input name="password" class="form-control"
-												placeholder="Enter OTP" type="password" value="" />
+												placeholder="Enter Password" type="password"
+												value="${dto.password}" />
 										</div>
-										<!-- form-group// -->
-										<div class="form-group">
+										<div class="form-group input-group">
 											<button type="submit" class="btn btn-success btn-block">
 												Login</button>
 										</div>
 									</form>
-
+									<br> <br>
+									<div style="align-content: flex-start;">
+										<button onclick="location.href='EnquiryPasswordReset.jsp'"
+											type="button" class="btn btn-danger btn-block">Forgot
+											Password?</button>
+									</div>
 								</div>
 							</div>
 						</div>
-
 						<!-- Modal footer -->
 					</div>
 				</div>
@@ -105,22 +102,22 @@
 		</div>
 
 		<div>
-			<nav class="navbar navbar-expand-md navbar-dark bg-dark"> </nav>
+			<nav class="navbar navbar-expand-md navbar-dark bg-dark"></nav>
 		</div>
-		<!-- Latest compiled JavaScript -->
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-			integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-			crossorigin="anonymous"></script>
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-			integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-			crossorigin="anonymous"></script>
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script type="text/javascript"
-			src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="./js/index.js"></script>
 	</div>
+	<!-- Latest compiled JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="./js/index.js"></script>
 </body>
 </html>
